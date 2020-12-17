@@ -24,11 +24,13 @@
  * 
  */
 
-package open.commons.pcap.payload;
+package open.commons.pcap.dhcp;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
+
+import org.pcap4j.packet.Packet.Header;
 
 import open.commons.utils.ByteUtils;
 import open.commons.utils.CollectionUtils;
@@ -750,4 +752,10 @@ public class DHCPPacket {
 
         return sb.toString();
     }
+    
+
+    public static interface DHCPHeader extends Header {
+        
+    }
+    
 }
