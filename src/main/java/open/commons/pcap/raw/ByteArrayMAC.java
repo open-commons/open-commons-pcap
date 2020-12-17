@@ -18,44 +18,37 @@
  *
  * This file is generated under this project, "open-commons-pcap".
  *
- * Date  : 2020. 12. 17. 오후 3:26:00
+ * Date  : 2020. 12. 17. 오후 5:30:20
  *
  * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.raw;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 import open.commons.utils.ByteUtils;
 
 /**
- * byte 배열을 정수로 표현하는 클래스.
  * 
  * @since 2020. 12. 17.
- * @version 1.8.0
+ * @version _._._
  * @author Park_Jun_Hong_(fafanmama_at_naver_com)
  */
-public class ByteArrayInteger extends DefaultByteArrayValue<Integer> {
+public class ByteArrayMAC extends DefaultByteArrayValue<String> {
 
-    private static final Function<byte[], Integer> DEFAULT_EXPR_INTEGER = bs -> ByteUtils.toInt(bs);
-
-    /**
-     * @param rawData
-     * @param expr
-     * @since 2020. 12. 17.
-     */
-    public ByteArrayInteger(byte[] rawData) {
-        this(rawData, DEFAULT_EXPR_INTEGER);
-    }
+    public static final Function<byte[], String> EXPR_MAC = bs -> {
+        return ByteUtils.toMACExpr(Arrays.copyOfRange(bs, 0, Math.min(6, bs.length)));
+    };
 
     /**
      * @param rawData
      * @param expr
      * @since 2020. 12. 17.
      */
-    public ByteArrayInteger(byte[] rawData, Function<byte[], Integer> expr) {
-        super(rawData, expr);
+    public ByteArrayMAC(byte[] rawData) {
+        super(rawData, EXPR_MAC);
     }
 }

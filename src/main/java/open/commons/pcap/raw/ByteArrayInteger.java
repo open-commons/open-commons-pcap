@@ -18,46 +18,44 @@
  *
  * This file is generated under this project, "open-commons-pcap".
  *
- * Date  : 2020. 12. 17. 오후 2:58:44
+ * Date  : 2020. 12. 17. 오후 3:26:00
  *
  * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.raw;
 
 import java.util.function.Function;
 
+import open.commons.utils.ByteUtils;
+
 /**
- * byte 배열을 문자열로 표현하는 클래스.
+ * byte 배열을 정수로 표현하는 클래스.
  * 
  * @since 2020. 12. 17.
  * @version 1.8.0
  * @author Park_Jun_Hong_(fafanmama_at_naver_com)
  */
-public class ByteArrayString extends DefaultByteArrayValue<String> {
+public class ByteArrayInteger extends DefaultByteArrayValue<Integer> {
 
-    private static final Function<byte[], String> REJECT_TERMINATED = bs -> {
-        return ByteArrayValue.readAsString(bs);
-    };
+    private static final Function<byte[], Integer> DEFAULT_EXPR_INTEGER = bs -> ByteUtils.toInt(bs);
 
     /**
-     * 기본 생성자
-     * 
      * @param rawData
+     * @param expr
      * @since 2020. 12. 17.
      */
-    public ByteArrayString(byte[] rawData) {
-        this(rawData, REJECT_TERMINATED);
+    public ByteArrayInteger(byte[] rawData) {
+        this(rawData, DEFAULT_EXPR_INTEGER);
     }
 
     /**
      * @param rawData
      * @param expr
-     *            문자로 변환하는 함수
      * @since 2020. 12. 17.
      */
-    public ByteArrayString(byte[] rawData, Function<byte[], String> expr) {
+    public ByteArrayInteger(byte[] rawData, Function<byte[], Integer> expr) {
         super(rawData, expr);
     }
 }

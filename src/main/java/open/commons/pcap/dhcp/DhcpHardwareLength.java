@@ -18,13 +18,13 @@
  *
  * This file is generated under this project, "open-commons-pcap".
  *
- * Date  : 2020. 12. 17. 오전 11:16:43
+ * Date  : 2020. 12. 17. 오전 11:38:27
  *
  * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.dhcp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,26 +35,21 @@ import open.commons.utils.IntegerUtils;
 import open.commons.utils.NumberUtils;
 
 /**
- * DHCP Operation Code
  * 
  * @since 2020. 12. 17.
- * @version 0.1.0
+ * @version _._._
  * @author Park_Jun_Hong_(fafanmama_at_naver_com)
- * @see <a href="https://tools.ietf.org/html/rfc2131#page-8">RFC 2131</a>
  */
-public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
+public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
 
-    private static final long serialVersionUID = 7652864601110102270L;
+    private static final long serialVersionUID = -5603754988845346170L;
 
-    /** REQUEST: 1 */
-    public static final DhcpOpCode REQUEST = new DhcpOpCode((byte) 1, "BOOTREQUEST");
-    /** REPLY: 2 */
-    public static final DhcpOpCode REPLY = new DhcpOpCode((byte) 2, "BOOTREPLY");
+    public static final DhcpHardwareLength ETHERNET_10MB = new DhcpHardwareLength((byte) 6, "10mb ethernet");
 
-    private static final Map<Byte, DhcpOpCode> registry = new HashMap<>();
+    private static final Map<Byte, DhcpHardwareLength> registry = new HashMap<>();
+
     static {
-        registry.put(REQUEST.value(), REQUEST);
-        registry.put(REPLY.value(), REPLY);
+        registry.put(ETHERNET_10MB.value(), ETHERNET_10MB);
     }
 
     /**
@@ -62,7 +57,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @param name
      * @since 2020. 12. 17.
      */
-    public DhcpOpCode(Byte value, String name) {
+    protected DhcpHardwareLength(Byte value, String name) {
         super(value, name);
     }
 
@@ -85,7 +80,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @see org.pcap4j.packet.namednumber.NamedNumber#compareTo(org.pcap4j.packet.namednumber.NamedNumber)
      */
     @Override
-    public int compareTo(DhcpOpCode o) {
+    public int compareTo(DhcpHardwareLength o) {
         return value().compareTo(o.value());
     }
 
@@ -94,9 +89,9 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * 
      * <pre>
      * [개정이력]
-     *      날짜    	| 작성자	|	내용
+     *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.        박준홍         최초 작성
      * </pre>
      *
      * @return
@@ -117,9 +112,9 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * 
      * <pre>
      * [개정이력]
-     *      날짜    	| 작성자	|	내용
+     *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.        박준홍         최초 작성
      * </pre>
      *
      * @param value
@@ -129,11 +124,11 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @version 0.1.0
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    public static DhcpOpCode getInstance(Byte value) {
+    public static DhcpHardwareLength getInstance(Byte value) {
         if (registry.containsKey(value)) {
             return registry.get(value);
         } else {
-            return new DhcpOpCode(value, NumberUtils.hex(IntegerUtils.toHexString(value, 2)));
+            return new DhcpHardwareLength(value, NumberUtils.hex(IntegerUtils.toHexString(value, 2)));
         }
     }
 
@@ -143,9 +138,9 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * 
      * <pre>
      * [개정이력]
-     *      날짜    	| 작성자	|	내용
+     *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.        박준홍         최초 작성
      * </pre>
      *
      * @param opcode
@@ -155,7 +150,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @version 0.1.0
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    public static DhcpOpCode register(DhcpOpCode opcode) {
+    public static DhcpHardwareLength register(DhcpHardwareLength opcode) {
         return registry.put(opcode.value(), opcode);
     }
 

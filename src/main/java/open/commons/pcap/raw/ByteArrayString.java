@@ -18,57 +18,46 @@
  *
  * This file is generated under this project, "open-commons-pcap".
  *
- * Date  : 2020. 12. 17. 오후 3:20:19
+ * Date  : 2020. 12. 17. 오후 2:58:44
  *
  * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.raw;
 
 import java.util.function.Function;
 
 /**
- * byte 배열을 표현하는 기본 클래스.
+ * byte 배열을 문자열로 표현하는 클래스.
  * 
  * @since 2020. 12. 17.
  * @version 1.8.0
  * @author Park_Jun_Hong_(fafanmama_at_naver_com)
  */
-public class DefaultByteArrayValue<T> extends ByteArrayValue<T> {
+public class ByteArrayString extends DefaultByteArrayValue<String> {
 
-    protected final Function<byte[], T> exprFunc;
+    private static final Function<byte[], String> REJECT_TERMINATED = bs -> {
+        return ByteArrayValue.readAsString(bs);
+    };
+
+    /**
+     * 기본 생성자
+     * 
+     * @param rawData
+     * @since 2020. 12. 17.
+     */
+    public ByteArrayString(byte[] rawData) {
+        this(rawData, REJECT_TERMINATED);
+    }
 
     /**
      * @param rawData
      * @param expr
-     *            TODO
+     *            문자로 변환하는 함수
      * @since 2020. 12. 17.
      */
-    public DefaultByteArrayValue(byte[] rawData, Function<byte[], T> expr) {
-        super(rawData);
-        this.exprFunc = expr;
-    }
-
-    /**
-     * <br>
-     * 
-     * <pre>
-     * [개정이력]
-     *      날짜    	| 작성자	|	내용
-     * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
-     * </pre>
-     *
-     * @return
-     *
-     * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
-     *
-     * @see open.commons.pcap.osi.application.ByteArrayValue#expr()
-     */
-    @Override
-    public T expr() {
-        return this.exprFunc.apply(this.rawData);
+    public ByteArrayString(byte[] rawData, Function<byte[], String> expr) {
+        super(rawData, expr);
     }
 }

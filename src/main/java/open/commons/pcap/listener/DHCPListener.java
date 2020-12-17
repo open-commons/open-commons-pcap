@@ -33,6 +33,7 @@ import java.util.function.Consumer;
 
 import org.pcap4j.core.PacketListener;
 import org.pcap4j.packet.EthernetPacket;
+import org.pcap4j.packet.IllegalRawDataException;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.UdpPacket;
@@ -42,7 +43,7 @@ import org.pcap4j.packet.namednumber.IpNumber;
 
 import open.commons.concurrent.DefaultThreadFactory;
 import open.commons.concurrent.FixedThreadPoolService;
-import open.commons.pcap.dhcp.DHCPPacket;
+import open.commons.pcap.dhcp.DhcpPacket;
 import open.commons.utils.ByteUtils;
 
 /**
@@ -55,7 +56,7 @@ public class DHCPListener implements PacketListener {
 
     private final FixedThreadPoolService executor;
 
-    private Vector<Consumer<DHCPPacket>> listeners = new Vector<>();
+    private Vector<Consumer<DhcpPacket>> listeners = new Vector<>();
 
     /**
      * 
@@ -100,7 +101,7 @@ public class DHCPListener implements PacketListener {
      * @version 1.8.0
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    public void addListener(Consumer<DHCPPacket> listener) {
+    public void addListener(Consumer<DhcpPacket> listener) {
         if (listener == null) {
             return;
         }
@@ -128,7 +129,7 @@ public class DHCPListener implements PacketListener {
      * @version 1.8.0
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    public void addListeners(Collection<Consumer<DHCPPacket>> listeners) {
+    public void addListeners(Collection<Consumer<DhcpPacket>> listeners) {
         if (listeners == null) {
             return;
         }
@@ -157,7 +158,7 @@ public class DHCPListener implements PacketListener {
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
     @SuppressWarnings("unchecked")
-    public void addListeners(Consumer<DHCPPacket>... listeners) {
+    public void addListeners(Consumer<DhcpPacket>... listeners) {
         if (listeners == null) {
             return;
         }
@@ -204,8 +205,14 @@ public class DHCPListener implements PacketListener {
                             case 67:
                             case 69:
                                 System.out.println(">>>" + ByteUtils.hexBinString(udpPkt.getPayload().getRawData()) + "<< ");
-                                DHCPPacket dhcpPkt = new DHCPPacket(udpPkt.getPayload().getRawData());
-                                System.out.println(dhcpPkt);
+                                byte[] udpPayload = udpPkt.getPayload().getRawData();
+                                DhcpPacket dhcpPkt;
+                                try {
+                                    dhcpPkt = DhcpPacket.newPacket(udpPayload, 0, udpPayload.length);
+                                    System.out.println(dhcpPkt);
+                                } catch (IllegalRawDataException e) {
+                                    e.printStackTrace();
+                                }
                                 break;
                             default:
                                 System.out.println(" * * * * * * * * NO DHCP * * * * * * * * ");
@@ -235,7 +242,7 @@ public class DHCPListener implements PacketListener {
      * @version _._._
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    public boolean remove(Consumer<DHCPPacket> listener) {
+    public boolean remove(Consumer<DhcpPacket> listener) {
         return this.listeners.remove(listener);
     }
 }

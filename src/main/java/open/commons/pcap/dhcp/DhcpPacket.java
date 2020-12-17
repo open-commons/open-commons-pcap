@@ -24,7 +24,7 @@
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.dhcp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +38,9 @@ import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.namednumber.ArpHardwareType;
 import org.pcap4j.util.ByteArrays;
 
+import open.commons.pcap.raw.ByteArrayInteger;
+import open.commons.pcap.raw.ByteArrayMAC;
+import open.commons.pcap.raw.ByteArrayString;
 import open.commons.utils.ByteUtils;
 import open.commons.utils.ExceptionUtils;
 
@@ -49,71 +52,12 @@ import open.commons.utils.ExceptionUtils;
  */
 public class DhcpPacket extends AbstractPacket {
 
+    private static final long serialVersionUID = 6846747913243110164L;
+
     private final DhcpHeader header;
+    private final DhcpOptions payload;
 
-    /**
-     * <pre>
-     * Message op code / message type.
-     * 1 = BOOTREQUEST, 2 = BOOTREPLY
-     * </pre>
-     */
-    private final DhcpOpCode op;
-
-    /** Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb ethernet. */
-    private final ArpHardwareType htype;
-    /** Hardware address length (e.g. '6' for 10mb ethernet). */
-    private final DhcpHardwareLength hlen;
-    /** Client sets to zero, optionally used by relay agents when booting via a relay agent. */
-    private final byte hops;
-    /**
-     * Transaction ID, a random number chosen by the client, used by the client and server to associate messages and
-     * responses between a client and a server.
-     */
-    private final int xid;
-    /** Filled in by client, seconds elapsed since client began address acquisition or renewal process. */
-    private final short secs;
-    /**
-     * <pre>
-                          1 1 1 1 1 1
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-      |B|             MBZ             |
-      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    
-      B:  BROADCAST flag
-    
-      MBZ:  MUST BE ZERO (reserved for future use)
-    
-      Figure 2:  Format of the 'flags' field
-     * </pre>
-     */
-    private final short flags;
-    /**
-     * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP
-     * requests.
-     */
-    private final String ciaddr;
-    /** 'your' (client) IP address. */
-    private final String yiaddr;
-    /** IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server. */
-    private final String siaddr;
-    /** Relay agent IP address, used in booting via a relay agent. */
-    private final String giaddr;
-    /** Client hardware address. */
-    private final String chaddr;
-    /** Optional server host name, null terminated string. */
-    private final ByteArrayString sname;
-    /**
-     * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified directory-path
-     * name in DHCPOFFER.
-     */
-    private final ByteArrayString file;
-
-    /** Optional parameters field. See the options documents for a list of defined options. */
-    // private final byte[] options;
-    // private final Packet payload;
-
-    public DhcpPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
+    private DhcpPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
         this.header = new DhcpHeader(rawData, offset, length);
         int payloadLen = rawData.length - header.length() - offset;
         if (payloadLen < 0) {
@@ -121,20 +65,7 @@ public class DhcpPacket extends AbstractPacket {
                     rawData.length, offset, header.length());
         }
 
-        this.op = DhcpOpCode.getInstance(ByteArrays.getByte(header.op, 0));
-        this.htype = ArpHardwareType.getInstance((short) ByteArrays.getByte(header.htype, 0));
-        this.hlen = DhcpHardwareLength.getInstance(ByteArrays.getByte(header.hlen, 0));
-        this.hops = ByteArrays.getByte(header.hops, 0);
-        this.xid = ByteArrays.getInt(header.xid, 0);
-        this.secs = ByteArrays.getShort(header.secs, 0);
-        this.flags = ByteArrays.getShort(header.flags, 0);
-        this.ciaddr = ByteUtils.toIPv4Expr(header.ciaddr);
-        this.yiaddr = ByteUtils.toIPv4Expr(header.yiaddr);
-        this.siaddr = ByteUtils.toIPv4Expr(header.siaddr);
-        this.giaddr = ByteUtils.toIPv4Expr(header.giaddr);
-        this.chaddr = ByteUtils.toMACExpr(header.chaddr);
-        this.sname = new ByteArrayString(header.sname);
-        this.file = new ByteArrayString(header.file);
+        this.payload = DhcpOptions.newPacket(rawData, offset + DhcpHeader.OPTIONS_OFFSET, length - DhcpHeader.OPTIONS_OFFSET);
     }
 
     /**
@@ -200,29 +131,7 @@ public class DhcpPacket extends AbstractPacket {
      */
     @Override
     public Packet getPayload() {
-        return super.getPayload();
-    }
-
-    /**
-     * <br>
-     * 
-     * <pre>
-     * [개정이력]
-     *      날짜    	| 작성자	|	내용
-     * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
-     * </pre>
-     *
-     * @return
-     *
-     * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
-     *
-     * @see org.pcap4j.packet.AbstractPacket#toString()
-     */
-    @Override
-    public String toString() {
-        return super.toString();
+        return this.payload;
     }
 
     /**
@@ -256,7 +165,6 @@ public class DhcpPacket extends AbstractPacket {
     public static final class Builder extends AbstractBuilder implements LengthBuilder<DhcpPacket>, ChecksumBuilder<DhcpPacket> {
 
         public Builder(DhcpPacket packet) {
-
         }
 
         /**
@@ -417,6 +325,8 @@ public class DhcpPacket extends AbstractPacket {
      */
     public static final class DhcpHeader extends AbstractHeader {
 
+        private static final long serialVersionUID = 2776739875025709004L;
+
         /** Header Length: OP Code (op) / 1 bytes (8 bits) */
         public static final int OP_CODE_HEADER_SIZE = 0x01;
         /** Header Length: Hardware Type (htype) / 1 bytes (8 bits) */
@@ -486,28 +396,28 @@ public class DhcpPacket extends AbstractPacket {
          * @see #OP_CODE_HEADER_SIZE
          * @see #OP_CODE_OFFSET
          */
-        private final byte[] op;
+        private final DhcpOpCode op;
         /**
          * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb ethernet.
          * 
          * @see #HW_TYPE_HEADER_SIZE
          * @see #HW_TYPE_OFFSET
          */
-        private final byte[] htype;
+        private final ArpHardwareType htype;
         /**
          * Hardware address length (e.g. '6' for 10mb ethernet).
          * 
          * @see #HW_ADDR_LENGTH_HEADER_SIZE
          * @see #HW_ADDR_LENGTH_OFFSET
          */
-        private final byte[] hlen;
+        private final DhcpHardwareLength hlen;
         /**
          * Client sets to zero, optionally used by relay agents when booting via a relay agent.
          * 
          * @see #HOPS_HEADER_SIZE
          * @see #HOPS_OFFSET
          */
-        private final byte[] hops;
+        private final ByteArrayInteger hops;
         /**
          * Transaction ID, a random number chosen by the client, used by the client and server to associate messages and
          * responses between a client and a server.
@@ -515,14 +425,14 @@ public class DhcpPacket extends AbstractPacket {
          * @see #TRANSACTION_ID_HEADER_SIZE
          * @see #TRANSACTION_ID_OFFSET
          */
-        private final byte[] xid;
+        private final ByteArrayInteger xid;
         /**
          * Filled in by client, seconds elapsed since client began address acquisition or renewal process.
          * 
          * @see #SECONDS_HEADER_SIZE
          * @see #SECONDS_OFFSET
          */
-        private final byte[] secs;
+        private final ByteArrayInteger secs;
 
         /**
          * <pre>
@@ -542,7 +452,7 @@ public class DhcpPacket extends AbstractPacket {
          * @see #FLAGS_HEADER_SIZE
          * @see #FLAGS_OFFSET
          */
-        private final byte[] flags;
+        private final ByteArrayInteger flags;
         /**
          * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP
          * requests.
@@ -550,42 +460,42 @@ public class DhcpPacket extends AbstractPacket {
          * @see #CLIENT_IP_ADDRESS_HEADER_SIZE
          * @see #CLIENT_IP_ADDRESS_OFFSET
          */
-        private final byte[] ciaddr;
+        private final ByteArrayString ciaddr;
         /**
          * 'your' (client) IP address.
          * 
          * @see #YOUR_IP_ADDRESS_HEADER_SIZE
          * @see #YOUR_IP_ADDRESS_OFFSET
          */
-        private final byte[] yiaddr;
+        private final ByteArrayString yiaddr;
         /**
          * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
          * 
          * @see #SERVER_IP_ADDRESS_HEADER_SIZE
          * @see #SERVER_IP_ADDRESS_OFFSET
          */
-        private final byte[] siaddr;
+        private final ByteArrayString siaddr;
         /**
          * Relay agent IP address, used in booting via a relay agent.
          * 
          * @see #GATEWAY_IP_ADDRESS_HEADER_SIZE
          * @see #GATEWAY_IP_ADDRESS_OFFSET
          */
-        private final byte[] giaddr;
+        private final ByteArrayString giaddr;
         /**
          * Client hardware address.
          * 
          * @see #CLIENT_HW_ADDRESS_HEADER_SIZE
          * @see #CLIENT_HW_ADDRESS_OFFSET
          */
-        private final byte[] chaddr;
+        private final ByteArrayMAC chaddr;
         /**
          * Optional server host name, null terminated string.
          * 
          * @see #SERVER_NAMER_HEADER_SIZE
          * @see #SERVER_NAME_OFFSET
          */
-        private final byte[] sname;
+        private final ByteArrayString sname;
         /**
          * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified
          * directory-path name in DHCPOFFER.
@@ -593,14 +503,14 @@ public class DhcpPacket extends AbstractPacket {
          * @see #BOOT_FILE_NAME_HEADER_SIZE
          * @see #BOOT_FILE_NAME_OFFSET
          */
-        private final byte[] file;
+        private final ByteArrayString file;
 
         /**
          * Optional parameters field. See the options documents for a list of defined options.
          * 
          * @see #OPTIONS_OFFSET
          */
-        private final byte[] options;
+        // private final byte[] options;
 
         /** raw bytes array */
         private final byte[] rawData;
@@ -613,23 +523,23 @@ public class DhcpPacket extends AbstractPacket {
                 throw new IllegalRawDataException(sb.toString());
             }
 
-            this.rawData = Arrays.copyOfRange(rawData, offset, length);
+            this.rawData = Arrays.copyOfRange(rawData, offset, offset + length);
 
-            this.op = Arrays.copyOfRange(this.rawData, OP_CODE_OFFSET, HW_TYPE_OFFSET);
-            this.htype = Arrays.copyOfRange(this.rawData, HW_TYPE_OFFSET, HW_ADDR_LENGTH_OFFSET);
-            this.hlen = Arrays.copyOfRange(this.rawData, HW_ADDR_LENGTH_OFFSET, HOPS_OFFSET);
-            this.hops = Arrays.copyOfRange(this.rawData, HOPS_OFFSET, TRANSACTION_ID_OFFSET);
-            this.xid = Arrays.copyOfRange(this.rawData, TRANSACTION_ID_OFFSET, SECONDS_OFFSET);
-            this.secs = Arrays.copyOfRange(this.rawData, SECONDS_OFFSET, FLAGS_OFFSET);
-            this.flags = Arrays.copyOfRange(this.rawData, FLAGS_OFFSET, CLIENT_IP_ADDRESS_OFFSET);
-            this.ciaddr = Arrays.copyOfRange(this.rawData, CLIENT_IP_ADDRESS_OFFSET, YOUR_IP_ADDRESS_OFFSET);
-            this.yiaddr = Arrays.copyOfRange(this.rawData, YOUR_IP_ADDRESS_OFFSET, SERVER_IP_ADDRESS_OFFSET);
-            this.siaddr = Arrays.copyOfRange(this.rawData, SERVER_IP_ADDRESS_OFFSET, GATEWAY_IP_ADDRESS_OFFSET);
-            this.giaddr = Arrays.copyOfRange(this.rawData, GATEWAY_IP_ADDRESS_OFFSET, CLIENT_HW_ADDRESS_OFFSET);
-            this.chaddr = Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET);
-            this.sname = Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET);
-            this.file = Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET);
-            this.options = Arrays.copyOf(this.rawData, OPTIONS_OFFSET);
+            this.op = DhcpOpCode.getInstance(ByteArrays.getByte(Arrays.copyOfRange(this.rawData, OP_CODE_OFFSET, HW_TYPE_OFFSET), 0));
+            this.htype = ArpHardwareType.getInstance((short) ByteArrays.getByte(Arrays.copyOfRange(this.rawData, HW_TYPE_OFFSET, HW_ADDR_LENGTH_OFFSET), 0));
+            this.hlen = DhcpHardwareLength.getInstance(ByteArrays.getByte(Arrays.copyOfRange(this.rawData, HW_ADDR_LENGTH_OFFSET, HOPS_OFFSET), 0));
+            this.hops = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, HOPS_OFFSET, TRANSACTION_ID_OFFSET));
+            this.xid = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, TRANSACTION_ID_OFFSET, SECONDS_OFFSET));
+            this.secs = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, SECONDS_OFFSET, FLAGS_OFFSET));
+            this.flags = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, FLAGS_OFFSET, CLIENT_IP_ADDRESS_OFFSET));
+            this.ciaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, CLIENT_IP_ADDRESS_OFFSET, YOUR_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
+            this.yiaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, YOUR_IP_ADDRESS_OFFSET, SERVER_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
+            this.siaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, SERVER_IP_ADDRESS_OFFSET, GATEWAY_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
+            this.giaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, GATEWAY_IP_ADDRESS_OFFSET, CLIENT_HW_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
+            this.chaddr = new ByteArrayMAC(Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
+            this.sname = new ByteArrayString(Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
+            this.file = new ByteArrayString(Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET));
+
         }
 
         /**
@@ -657,20 +567,20 @@ public class DhcpPacket extends AbstractPacket {
             builder.append(this.rawData.length);
             builder.append(" bytes)]");
             builder.append("\n");
-            builder.append(String.format(FORMAT, "(op)", "OP Code", DhcpOpCode.getInstance(ByteArrays.getByte(this.op, 0))));
-            builder.append(String.format(FORMAT, "(htype)", "H/W Type", ArpHardwareType.getInstance((short) ByteArrays.getByte(this.htype, 0))));
-            builder.append(String.format(FORMAT, "(hlen)", "H/W Addr. Len", DhcpHardwareLength.getInstance(ByteArrays.getByte(this.hlen, 0))));
-            builder.append(String.format(FORMAT, "(hops)", "HOPS", new ByteArrayInteger(this.hops)));
-            builder.append(String.format(FORMAT, "(xid)", "Transaction ID", new ByteArrayInteger(this.xid)));
-            builder.append(String.format(FORMAT, "(sec)", "Seconds", new ByteArrayInteger(this.secs)));
-            builder.append(String.format(FORMAT, "(flags)", "Flags", new ByteArrayInteger(this.flags)));
-            builder.append(String.format(FORMAT, "(ciaddr)", "Client IP", new ByteArrayString(this.ciaddr, ByteUtils::toIPv4Expr)));
-            builder.append(String.format(FORMAT, "(yiaddr)", "Your IP", new ByteArrayString(this.yiaddr, ByteUtils::toIPv4Expr)));
-            builder.append(String.format(FORMAT, "(siaddr)", "Server IP", new ByteArrayString(this.siaddr, ByteUtils::toIPv4Expr)));
-            builder.append(String.format(FORMAT, "(giaddr)", "Gateway IP", new ByteArrayString(this.giaddr, ByteUtils::toIPv4Expr)));
-            builder.append(String.format(FORMAT, "(chaddr)", "Client H/W", new ByteArrayString(this.chaddr, ByteUtils::toMACExpr)));
-            builder.append(String.format(FORMAT, "(sname)", "Server Name", new ByteArrayString(this.sname)));
-            builder.append(String.format(FORMAT, "(file)", "Boot File Name", new ByteArrayString(this.file)));
+            builder.append(String.format(FORMAT, "(op)", "OP Code", this.op));
+            builder.append(String.format(FORMAT, "(htype)", "H/W Type", this.htype));
+            builder.append(String.format(FORMAT, "(hlen)", "H/W Addr. Len", this.hlen));
+            builder.append(String.format(FORMAT, "(hops)", "HOPS", this.hops));
+            builder.append(String.format(FORMAT, "(xid)", "Transaction ID", this.xid));
+            builder.append(String.format(FORMAT, "(sec)", "Seconds", this.secs));
+            builder.append(String.format(FORMAT, "(flags)", "Flags", this.flags));
+            builder.append(String.format(FORMAT, "(ciaddr)", "Client IP", this.ciaddr));
+            builder.append(String.format(FORMAT, "(yiaddr)", "Your IP", this.yiaddr));
+            builder.append(String.format(FORMAT, "(siaddr)", "Server IP", this.siaddr));
+            builder.append(String.format(FORMAT, "(giaddr)", "Gateway IP", this.giaddr));
+            builder.append(String.format(FORMAT, "(chaddr)", "Client H/W", this.chaddr));
+            builder.append(String.format(FORMAT, "(sname)", "Server Name", this.sname));
+            builder.append(String.format(FORMAT, "(file)", "Boot File Name", this.file));
 
             return builder.toString();
         }
@@ -696,51 +606,22 @@ public class DhcpPacket extends AbstractPacket {
         protected List<byte[]> getRawFields() {
             List<byte[]> rawFields = new ArrayList<byte[]>();
 
-            rawFields.add(Arrays.copyOf(this.op, 0));
-            rawFields.add(Arrays.copyOf(this.htype, 0));
-            rawFields.add(Arrays.copyOf(this.hlen, 0));
-            rawFields.add(Arrays.copyOf(this.hops, 0));
-            rawFields.add(Arrays.copyOf(this.xid, 0));
-            rawFields.add(Arrays.copyOf(this.secs, 0));
-            rawFields.add(Arrays.copyOf(this.flags, 0));
-            rawFields.add(Arrays.copyOf(this.ciaddr, 0));
-            rawFields.add(Arrays.copyOf(this.yiaddr, 0));
-            rawFields.add(Arrays.copyOf(this.siaddr, 0));
-            rawFields.add(Arrays.copyOf(this.giaddr, 0));
-            rawFields.add(Arrays.copyOf(this.chaddr, 0));
-            rawFields.add(Arrays.copyOf(this.sname, 0));
-            rawFields.add(Arrays.copyOf(this.file, 0));
+            rawFields.add(Arrays.copyOfRange(this.rawData, OP_CODE_OFFSET, HW_TYPE_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, HW_TYPE_OFFSET, HW_ADDR_LENGTH_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, HW_ADDR_LENGTH_OFFSET, HOPS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, HOPS_OFFSET, TRANSACTION_ID_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, TRANSACTION_ID_OFFSET, SECONDS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, SECONDS_OFFSET, FLAGS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, FLAGS_OFFSET, CLIENT_IP_ADDRESS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, CLIENT_IP_ADDRESS_OFFSET, YOUR_IP_ADDRESS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, YOUR_IP_ADDRESS_OFFSET, SERVER_IP_ADDRESS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, SERVER_IP_ADDRESS_OFFSET, GATEWAY_IP_ADDRESS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, GATEWAY_IP_ADDRESS_OFFSET, CLIENT_HW_ADDRESS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET));
 
             return rawFields;
-        }
-
-        /**
-         * 
-         * <br>
-         * 
-         * <pre>
-         * [개정이력]
-         *      날짜    	| 작성자	|	내용
-         * ------------------------------------------
-         * 2020. 12. 17.		박준홍			최초 작성
-         * </pre>
-         *
-         * @param rawData
-         *            데이터
-         * @param offset
-         *            읽을 기준 위치
-         * @param from
-         *            읽을 시작 위치
-         * @param to
-         *            읽을 끝 위치
-         * @return
-         *
-         * @since 2020. 12. 17.
-         * @version _._._
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
-         */
-        private static byte[] copy(byte[] rawData, int offset, int from, int to) {
-            return Arrays.copyOfRange(rawData, offset + from, offset + to);
         }
     }
 }

@@ -24,7 +24,7 @@
  * 
  */
 
-package open.commons.pcap.osi.application;
+package open.commons.pcap.raw;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -107,8 +107,25 @@ public abstract class ByteArrayValue<T> {
      * @version _._._
      * @author Park_Jun_Hong_(fafanmama_at_naver_com)
      */
-    protected static String readAsString(byte[] bytes) {
+    public static String readAsString(byte[] bytes) {
         String str = new String(bytes, Charset.forName("UTF-8"));
-        return str.trim().isEmpty() ? "" : str;
+        if (str.trim().isEmpty()) {
+            return "";
+        }
+
+        StringBuffer sb = new StringBuffer();
+
+        for (byte b : bytes) {
+            if (b != 0) {
+                sb.append((char) b);
+            } else {
+                sb.append("@");
+                sb.append(System.nanoTime());
+                sb.append("_C_R_A_S_H_E_D_T_E_R_M_I_N_A_T_E_D_C_H_A_R_A_C_T_E_R_");
+                break;
+            }
+        }
+
+        return sb.toString();
     }
 }
