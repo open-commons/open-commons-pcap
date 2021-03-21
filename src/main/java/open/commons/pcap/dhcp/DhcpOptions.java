@@ -29,7 +29,6 @@ package open.commons.pcap.dhcp;
 import java.util.Arrays;
 
 import org.pcap4j.packet.AbstractPacket;
-import org.pcap4j.packet.IllegalRawDataException;
 import org.pcap4j.util.ByteArrays;
 
 import open.commons.pcap.raw.ByteArrayValue;
@@ -43,13 +42,18 @@ import open.commons.utils.ByteUtils;
  */
 public class DhcpOptions extends AbstractPacket {
 
+    /**
+     *
+     * @since 2020. 12. 21.
+     */
+    private static final long serialVersionUID = 8447984915514600000L;
     private final byte[] rawData;
 
     /**
      * 
      * @since 2020. 12. 17.
      */
-    private DhcpOptions(byte[] rawData, int offset, int length) throws IllegalRawDataException {
+    private DhcpOptions(byte[] rawData, int offset, int length) {
         this.rawData = Arrays.copyOfRange(rawData, offset, offset + length);
     }
 
@@ -130,7 +134,7 @@ public class DhcpOptions extends AbstractPacket {
         return Arrays.copyOf(this.rawData, 0);
     }
 
-    public static DhcpOptions newPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
+    public static DhcpOptions newPacket(byte[] rawData, int offset, int length) {
         ByteArrays.validateBounds(rawData, offset, length);
         return new DhcpOptions(rawData, offset, length);
     }

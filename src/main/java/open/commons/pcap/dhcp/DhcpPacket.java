@@ -41,6 +41,7 @@ import org.pcap4j.util.ByteArrays;
 import open.commons.pcap.raw.ByteArrayInteger;
 import open.commons.pcap.raw.ByteArrayMAC;
 import open.commons.pcap.raw.ByteArrayString;
+import open.commons.utils.ArrayUtils;
 import open.commons.utils.ByteUtils;
 import open.commons.utils.ExceptionUtils;
 
@@ -56,6 +57,13 @@ public class DhcpPacket extends AbstractPacket {
 
     private final DhcpHeader header;
     private final DhcpOptions payload;
+
+    private DhcpPacket(Builder builder) {
+        this.header = new DhcpHeader(builder, builder.options);
+        this.payload = builder.options != null //
+                ? DhcpOptions.newPacket(builder.options, 0, builder.options.length) //
+                : null;
+    }
 
     private DhcpPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
         this.header = new DhcpHeader(rawData, offset, length);
@@ -164,7 +172,104 @@ public class DhcpPacket extends AbstractPacket {
 
     public static final class Builder extends AbstractBuilder implements LengthBuilder<DhcpPacket>, ChecksumBuilder<DhcpPacket> {
 
+        /**
+         * <pre>
+         * Message op code / message type.
+         * 1 = BOOTREQUEST, 2 = BOOTREPLY
+         * </pre>
+         */
+        private DhcpOpCode op;
+        /**
+         * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb ethernet.
+         */
+        private ArpHardwareType htype;
+        /**
+         * Hardware address length (e.g. '6' for 10mb ethernet).
+         */
+        private DhcpHardwareLength hlen;
+        /**
+         * Client sets to zero, optionally used by relay agents when booting via a relay agent.
+         */
+        private ByteArrayInteger hops;
+        /**
+         * Transaction ID, a random number chosen by the client, used by the client and server to associate messages and
+         * responses between a client and a server.
+         */
+        private ByteArrayInteger xid;
+        /**
+         * Filled in by client, seconds elapsed since client began address acquisition or renewal process.
+         */
+        private ByteArrayInteger secs;
+
+        /**
+         * <pre>
+                              1 1 1 1 1 1
+          0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+          |B|             MBZ             |
+          +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        
+          B:  BROADCAST flag
+        
+          MBZ:  MUST BE ZERO (reserved for future use)
+        
+          Figure 2:  Format of the 'flags' field
+         * </pre>
+         */
+        private ByteArrayInteger flags;
+        /**
+         * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP
+         * requests.
+         */
+        private ByteArrayString ciaddr;
+        /**
+         * 'your' (client) IP address.
+         */
+        private ByteArrayString yiaddr;
+        /**
+         * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
+         */
+        private ByteArrayString siaddr;
+        /**
+         * Relay agent IP address, used in booting via a relay agent.
+         */
+        private ByteArrayString giaddr;
+        /**
+         * Client hardware address.
+         */
+        private ByteArrayMAC chaddr;
+        /**
+         * Optional server host name, null terminated string.
+         */
+        private ByteArrayString sname;
+        /**
+         * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified
+         * directory-path name in DHCPOFFER.
+         */
+        private ByteArrayString file;
+
+        /**
+         * Optional parameters field. See the options documents for a list of defined options.<br>
+         * payloadRaw bytes array
+         */
+        private byte[] options;
+
         public Builder(DhcpPacket packet) {
+            this.op = packet.header.op;
+            this.htype = packet.header.htype;
+            this.hlen = packet.header.hlen;
+            this.hops = packet.header.hops;
+            this.xid = packet.header.xid;
+            this.secs = packet.header.secs;
+            this.flags = packet.header.flags;
+            this.ciaddr = packet.header.ciaddr;
+            this.yiaddr = packet.header.yiaddr;
+            this.siaddr = packet.header.siaddr;
+            this.giaddr = packet.header.giaddr;
+            this.chaddr = packet.header.chaddr;
+            this.sname = packet.header.sname;
+            this.file = packet.header.file;
+            this.options = packet.header.options;
         }
 
         /**
@@ -186,7 +291,51 @@ public class DhcpPacket extends AbstractPacket {
          */
         @Override
         public DhcpPacket build() {
-            return null;
+            return new DhcpPacket(this);
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param chaddr
+         *            the chaddr to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #chaddr
+         */
+        public Builder chaddr(ByteArrayMAC chaddr) {
+            this.chaddr = chaddr;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param ciaddr
+         *            the ciaddr to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #ciaddr
+         */
+        public Builder Ciaddr(ByteArrayString ciaddr) {
+            this.ciaddr = ciaddr;
+            return this;
         }
 
         /**
@@ -209,6 +358,7 @@ public class DhcpPacket extends AbstractPacket {
          */
         @Override
         public ChecksumBuilder<DhcpPacket> correctChecksumAtBuild(boolean correctChecksumAtBuild) {
+            // Not supported
             return null;
         }
 
@@ -232,7 +382,294 @@ public class DhcpPacket extends AbstractPacket {
          */
         @Override
         public LengthBuilder<DhcpPacket> correctLengthAtBuild(boolean correctLengthAtBuild) {
+            // Not supported
             return null;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param file
+         *            the file to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #file
+         */
+        public Builder file(ByteArrayString file) {
+            this.file = file;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param flags
+         *            the flags to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #flags
+         */
+        public Builder flags(ByteArrayInteger flags) {
+            this.flags = flags;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param giaddr
+         *            the giaddr to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #giaddr
+         */
+        public Builder giaddr(ByteArrayString giaddr) {
+            this.giaddr = giaddr;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param hlen
+         *            the hlen to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #hlen
+         */
+        public Builder hlen(DhcpHardwareLength hlen) {
+            this.hlen = hlen;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param hops
+         *            the hops to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #hops
+         */
+        public Builder hops(ByteArrayInteger hops) {
+            this.hops = hops;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param htype
+         *            the htype to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #htype
+         */
+        public Builder htype(ArpHardwareType htype) {
+            this.htype = htype;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param xid
+         *            the xid to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #xid
+         */
+        public Builder kid(ByteArrayInteger xid) {
+            this.xid = xid;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param op
+         *            the op to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #op
+         */
+        public Builder op(DhcpOpCode op) {
+            this.op = op;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param options
+         *            the options to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #options
+         */
+        public Builder options(byte[] options) {
+            this.options = options;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param secs
+         *            the secs to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #secs
+         */
+        public Builder secs(ByteArrayInteger secs) {
+            this.secs = secs;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param siaddr
+         *            the siaddr to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #siaddr
+         */
+        public Builder siaddr(ByteArrayString siaddr) {
+            this.siaddr = siaddr;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param sname
+         *            the sname to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #sname
+         */
+        public Builder sname(ByteArrayString sname) {
+            this.sname = sname;
+            return this;
+        }
+
+        /**
+         * <br>
+         * 
+         * <pre>
+         * [개정이력]
+         *      날짜    	| 작성자	|	내용
+         * ------------------------------------------
+         * 2020. 12. 23.		박준홍			최초 작성
+         * </pre>
+         *
+         * @param yiaddr
+         *            the yiaddr to set
+         *
+         * @since 2020. 12. 23.
+         * 
+         * @see #yiaddr
+         */
+        public Builder yiaddr(ByteArrayString yiaddr) {
+            this.yiaddr = yiaddr;
+            return this;
         }
     }
 
@@ -510,10 +947,47 @@ public class DhcpPacket extends AbstractPacket {
          * 
          * @see #OPTIONS_OFFSET
          */
-        // private final byte[] options;
+        private final byte[] options;
 
         /** raw bytes array */
         private final byte[] rawData;
+
+        private DhcpHeader(Builder builder, byte[] payload) {
+
+            this.op = builder.op;
+            this.htype = builder.htype;
+            this.hlen = builder.hlen;
+            this.hops = builder.hops;
+            this.xid = builder.xid;
+            this.secs = builder.secs;
+            this.flags = builder.flags;
+            this.ciaddr = builder.ciaddr;
+            this.yiaddr = builder.yiaddr;
+            this.siaddr = builder.siaddr;
+            this.giaddr = builder.giaddr;
+            this.chaddr = builder.chaddr;
+            this.sname = builder.sname;
+            this.file = builder.file;
+            this.options = payload;
+
+            this.rawData = ArrayUtils.merge( //
+                    new byte[] { this.op.value() } //
+                    , ByteArrays.toByteArray(this.htype.value()) //
+                    , new byte[] { this.hlen.value() } //
+                    , this.hops.getRawData() //
+                    , this.xid.getRawData() //
+                    , this.secs.getRawData() //
+                    , this.flags.getRawData() //
+                    , this.ciaddr.getRawData() //
+                    , this.yiaddr.getRawData() //
+                    , this.siaddr.getRawData() //
+                    , this.giaddr.getRawData() //
+                    , this.chaddr.getRawData() //
+                    , this.sname.getRawData() //
+                    , this.file.getRawData() //
+                    , payload //
+            );
+        }
 
         private DhcpHeader(byte[] rawData, int offset, int length) throws IllegalRawDataException {
             if (length < OPTIONS_OFFSET) {
@@ -539,7 +1013,7 @@ public class DhcpPacket extends AbstractPacket {
             this.chaddr = new ByteArrayMAC(Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
             this.sname = new ByteArrayString(Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
             this.file = new ByteArrayString(Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET));
-
+            this.options = Arrays.copyOfRange(this.rawData, OPTIONS_OFFSET, this.rawData.length);
         }
 
         /**
@@ -581,6 +1055,7 @@ public class DhcpPacket extends AbstractPacket {
             builder.append(String.format(FORMAT, "(chaddr)", "Client H/W", this.chaddr));
             builder.append(String.format(FORMAT, "(sname)", "Server Name", this.sname));
             builder.append(String.format(FORMAT, "(file)", "Boot File Name", this.file));
+            builder.append(String.format(FORMAT, "(options)", "Options", ByteUtils.hexBinString("0x", this.options)));
 
             return builder.toString();
         }
@@ -620,6 +1095,7 @@ public class DhcpPacket extends AbstractPacket {
             rawFields.add(Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
             rawFields.add(Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
             rawFields.add(Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET));
+            rawFields.add(Arrays.copyOfRange(this.rawData, OPTIONS_OFFSET, this.rawData.length));
 
             return rawFields;
         }
