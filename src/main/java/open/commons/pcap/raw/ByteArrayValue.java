@@ -121,7 +121,7 @@ public abstract class ByteArrayValue<T> {
             } else {
                 sb.append("@");
                 sb.append(System.nanoTime());
-                sb.append("_C_R_A_S_H_E_D_T_E_R_M_I_N_A_T_E_D_C_H_A_R_A_C_T_E_R_");
+                sb.append("-C_R_A_S_H_E_D-T_E_R_M_I_N_A_T_E_D-C_H_A_R_A_C_T_E_R-");
                 break;
             }
         }
