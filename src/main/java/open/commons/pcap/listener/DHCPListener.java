@@ -36,10 +36,14 @@ import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IllegalRawDataException;
 import org.pcap4j.packet.IpV4Packet;
 import org.pcap4j.packet.Packet;
+import org.pcap4j.packet.TcpPacket;
+import org.pcap4j.packet.TcpPacket.TcpHeader;
 import org.pcap4j.packet.UdpPacket;
 import org.pcap4j.packet.UdpPacket.UdpHeader;
 import org.pcap4j.packet.namednumber.EtherType;
 import org.pcap4j.packet.namednumber.IpNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import open.commons.concurrent.DefaultThreadFactory;
 import open.commons.concurrent.FixedThreadPoolService;
@@ -53,6 +57,8 @@ import open.commons.utils.ByteUtils;
  * @author Park_Jun_Hong_(fafanmama_at_naver_com)
  */
 public class DHCPListener implements PacketListener {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private final FixedThreadPoolService executor;
 
@@ -185,7 +191,7 @@ public class DHCPListener implements PacketListener {
      */
     @Override
     public void gotPacket(Packet packet) {
-        // System.out.println("Timestamp : " + handle.getTimestamp());
+        // logger.debug("Timestamp : " + handle.getTimestamp());
 
         EthernetPacket ethPacket = (EthernetPacket) packet;
 
@@ -196,33 +202,58 @@ public class DHCPListener implements PacketListener {
                 IpV4Packet ipv4Packet = (IpV4Packet) ethPacket.getPayload();
                 IpNumber n = ipv4Packet.getHeader().getProtocol();
                 switch (n.value()) {
-                    // UDP
-                    case 0x0011:
+                    // User Datagram (UDP): 17
+                    case 0x0011: // IpNumber.UDP
                         UdpPacket udpPkt = (UdpPacket) ipv4Packet.getPayload();
                         UdpHeader udpHd = udpPkt.getHeader();
                         switch (udpHd.getSrcPort().valueAsInt()) {
                             // Bootstrap Protocol Server
                             case 67:
                             case 69:
-                                System.out.println(">>>" + ByteUtils.hexBinString(udpPkt.getPayload().getRawData()) + "<< ");
+                                logger.debug(">>>" + ByteUtils.hexBinString(udpPkt.getPayload().getRawData()) + "<< ");
                                 byte[] udpPayload = udpPkt.getPayload().getRawData();
                                 DhcpPacket dhcpPkt;
                                 try {
                                     dhcpPkt = DhcpPacket.newPacket(udpPayload, 0, udpPayload.length);
-                                    System.out.println(dhcpPkt);
+                                    logger.debug("{}", dhcpPkt);
                                 } catch (IllegalRawDataException e) {
                                     e.printStackTrace();
                                 }
                                 break;
                             default:
-                                System.out.println(" * * * * * * * * NO DHCP * * * * * * * * ");
+                                logger.debug(" * * * * * * * * NO DHCP * * * * * * * * ");
+                                break;
+                        }
+
+                        break;
+                    // Transmission Control (TCP): 6
+                    case 0x0006: // IpNumber.TCP
+                        TcpPacket tcpPkt = (TcpPacket) ipv4Packet.getPayload();
+                        TcpHeader tcpHd = tcpPkt.getHeader();
+
+                        logger.debug(" * * * * * * * * TCP Packet * * * * * * * * : {}", tcpHd.getSrcPort());
+                        switch (tcpHd.getSrcPort().value()) {
+                            // HTTPS: 443
+                            case 443:
+                                logger.debug("{}", tcpHd);
                                 break;
                         }
 
                         break;
                 }
                 break;
+            // IPv6
+            case (short) 0x86dd:
+                logger.debug(" * * * * * * * * IPv6 * * * * * * * * ");
+                logger.debug("{}", ethPacket);
+                break;
+            // ARP
+            case 0x0806:
+                logger.debug(" * * * * * * * * ARP * * * * * * * * ");
+                logger.debug("{}", ethPacket);
+                break;
         }
+
     }
 
     /**
