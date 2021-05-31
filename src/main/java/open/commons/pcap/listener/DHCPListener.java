@@ -32,9 +32,12 @@ import java.util.Vector;
 import java.util.function.Consumer;
 
 import org.pcap4j.core.PacketListener;
+import org.pcap4j.packet.ArpPacket;
+import org.pcap4j.packet.ArpPacket.ArpHeader;
 import org.pcap4j.packet.EthernetPacket;
 import org.pcap4j.packet.IllegalRawDataException;
 import org.pcap4j.packet.IpV4Packet;
+import org.pcap4j.packet.IpV6Packet;
 import org.pcap4j.packet.Packet;
 import org.pcap4j.packet.TcpPacket;
 import org.pcap4j.packet.TcpPacket.TcpHeader;
@@ -191,7 +194,7 @@ public class DHCPListener implements PacketListener {
      */
     @Override
     public void gotPacket(Packet packet) {
-        // logger.debug("Timestamp : " + handle.getTimestamp());
+        // logger.debug("Timestamp : {}", handle.getTimestamp());
 
         EthernetPacket ethPacket = (EthernetPacket) packet;
 
@@ -200,8 +203,8 @@ public class DHCPListener implements PacketListener {
             // IPV4
             case 0x0800:
                 IpV4Packet ipv4Packet = (IpV4Packet) ethPacket.getPayload();
-                IpNumber n = ipv4Packet.getHeader().getProtocol();
-                switch (n.value()) {
+                IpNumber hdProtocol = ipv4Packet.getHeader().getProtocol();
+                switch (hdProtocol.value()) {
                     // User Datagram (UDP): 17
                     case 0x0011: // IpNumber.UDP
                         UdpPacket udpPkt = (UdpPacket) ipv4Packet.getPayload();
@@ -241,16 +244,25 @@ public class DHCPListener implements PacketListener {
 
                         break;
                 }
+
                 break;
             // IPv6
             case (short) 0x86dd:
                 logger.debug(" * * * * * * * * IPv6 * * * * * * * * ");
                 logger.debug("{}", ethPacket);
+
+                IpV6Packet ipv6Packet = (IpV6Packet) ethPacket.getPayload();
+                hdProtocol = ipv6Packet.getHeader().getProtocol();
+
                 break;
             // ARP
             case 0x0806:
                 logger.debug(" * * * * * * * * ARP * * * * * * * * ");
                 logger.debug("{}", ethPacket);
+
+                ArpPacket arpPacket = (ArpPacket) ethPacket.getPayload();
+                ArpHeader arpHeader = arpPacket.getHeader();
+
                 break;
         }
 
