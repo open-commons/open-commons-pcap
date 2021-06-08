@@ -115,4 +115,4 @@ local.properties
 
 mvn-deploy.sh
 
-src/test/**
+# src/test/**
