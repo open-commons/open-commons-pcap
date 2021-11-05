@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Park Jun-Hong_(parkjunhong77/google/com)
+ * Copyright 2020 Park Jun-Hong_(parkjunhong77@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  *
  * Date  : 2020. 12. 16. 오후 5:33:05
  *
- * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
+ * Author: Park_Jun_Hong_(parkjunhong77@gmail.com)
  * 
  */
 
@@ -49,7 +49,7 @@ import open.commons.utils.ExceptionUtils;
  * 
  * @since 2020. 12. 16.
  * @version _._._
- * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+ * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
  */
 public class DhcpPacket extends AbstractPacket {
 
@@ -89,7 +89,7 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 16.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getBuilder()
      */
@@ -111,7 +111,7 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getHeader()
      */
@@ -133,7 +133,7 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getPayload()
      */
@@ -163,7 +163,7 @@ public class DhcpPacket extends AbstractPacket {
      *
      * @since 2020. 12. 16.
      * @version _._._
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static DhcpPacket newPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
         ByteArrays.validateBounds(rawData, offset, length);
@@ -285,7 +285,7 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.LengthBuilder#build()
          */
@@ -352,7 +352,7 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.ChecksumBuilder#correctChecksumAtBuild(boolean)
          */
@@ -376,7 +376,7 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.LengthBuilder#correctLengthAtBuild(boolean)
          */
@@ -758,7 +758,7 @@ public class DhcpPacket extends AbstractPacket {
      * 
      * @since 2020. 12. 16.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static final class DhcpHeader extends AbstractHeader {
 
@@ -1029,7 +1029,7 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 17.
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.AbstractPacket.AbstractHeader#buildString()
          */
@@ -1073,7 +1073,7 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.AbstractPacket.AbstractHeader#getRawFields()
          */

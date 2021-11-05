@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Park Jun-Hong_(parkjunhong77/google/com)
+ * Copyright 2020 Park Jun-Hong_(parkjunhong77@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  *
  * Date  : 2020. 12. 15. 오후 4:16:53
  *
- * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
+ * Author: Park_Jun_Hong_(parkjunhong77@gmail.com)
  * 
  */
 
@@ -57,7 +57,7 @@ import open.commons.utils.ByteUtils;
  * 
  * @since 2020. 12. 15.
  * @version _._._
- * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+ * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
  */
 public class DHCPListener implements PacketListener {
 
@@ -108,7 +108,7 @@ public class DHCPListener implements PacketListener {
      *
      * @since 2020. 12. 15.
      * @version 1.8.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public void addListener(Consumer<DhcpPacket> listener) {
         if (listener == null) {
@@ -136,7 +136,7 @@ public class DHCPListener implements PacketListener {
      *
      * @since 2020. 12. 15.
      * @version 1.8.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public void addListeners(Collection<Consumer<DhcpPacket>> listeners) {
         if (listeners == null) {
@@ -164,7 +164,7 @@ public class DHCPListener implements PacketListener {
      *
      * @since 2020. 12. 15.
      * @version 1.8.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     @SuppressWarnings("unchecked")
     public void addListeners(Consumer<DhcpPacket>... listeners) {
@@ -188,7 +188,7 @@ public class DHCPListener implements PacketListener {
      * @param packet
      *
      * @since 2020. 12. 15.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.core.PacketListener#gotPacket(org.pcap4j.packet.Packet)
      */
@@ -283,7 +283,7 @@ public class DHCPListener implements PacketListener {
      *
      * @since 2020. 12. 15.
      * @version _._._
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public boolean remove(Consumer<DhcpPacket> listener) {
         return this.listeners.remove(listener);

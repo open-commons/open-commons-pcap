@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Park Jun-Hong_(parkjunhong77/google/com)
+ * Copyright 2020 Park Jun-Hong_(parkjunhong77@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
  *
  * Date  : 2020. 12. 17. 오전 11:16:43
  *
- * Author: Park_Jun_Hong_(fafanmama_at_naver_com)
+ * Author: Park_Jun_Hong_(parkjunhong77@gmail.com)
  * 
  */
 
@@ -39,7 +39,7 @@ import open.commons.utils.NumberUtils;
  * 
  * @since 2020. 12. 17.
  * @version 0.1.0
- * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+ * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
  * @see <a href="https://tools.ietf.org/html/rfc2131#page-8">RFC 2131</a>
  */
 public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
@@ -80,7 +80,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.namednumber.NamedNumber#compareTo(org.pcap4j.packet.namednumber.NamedNumber)
      */
@@ -102,7 +102,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.namednumber.NamedNumber#valueAsString()
      */
@@ -127,7 +127,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      *
      * @since 2020. 12. 17.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static DhcpOpCode getInstance(Byte value) {
         if (registry.containsKey(value)) {
@@ -153,7 +153,7 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      *
      * @since 2020. 12. 17.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static DhcpOpCode register(DhcpOpCode opcode) {
         return registry.put(opcode.value(), opcode);

@@ -3,6 +3,6 @@
  * 
  * @since 2020. 12. 11.
  * @version 0.1.0
- * @author Park_Jun_Hong_(fafanmama_at_naver_com)
+ * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
  */
 package open.commons.pcap.dhcp;
