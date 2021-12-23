@@ -21,8 +21,8 @@
 		<!-- >>> begin: dependencies -->
 		<slf4j-api.version>1.7.32</slf4j-api.version>
 		<log4j-slf4j.version>2.15.0</log4j-slf4j.version>
-		<org.apache.logging.log4j-core.version>2.15.0</org.apache.logging.log4j-core.version>
-		<org.apache.logging.log4j-api.version>2.15.0</org.apache.logging.log4j-api.version>
+		
+		<org.apache.logging.log4j-api.version>2.17.0</org.apache.logging.log4j-api.version>
 
 		<open-commons-core.version>1.8.0-SNAPSHOT</open-commons-core.version>
 
@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>${org.apache.logging.log4j-core.version}</version>
+			<version>${org.apache.logging.log4j-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
