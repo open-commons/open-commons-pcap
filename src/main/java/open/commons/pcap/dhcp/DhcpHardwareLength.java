@@ -31,8 +31,8 @@ import java.util.Map;
 
 import org.pcap4j.packet.namednumber.NamedNumber;
 
-import open.commons.utils.IntegerUtils;
-import open.commons.utils.NumberUtils;
+import open.commons.core.utils.IntegerUtils;
+import open.commons.core.utils.NumberUtils;
 
 /**
  * 

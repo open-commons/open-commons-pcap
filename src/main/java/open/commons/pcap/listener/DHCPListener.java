@@ -48,10 +48,10 @@ import org.pcap4j.packet.namednumber.IpNumber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import open.commons.concurrent.DefaultThreadFactory;
-import open.commons.concurrent.FixedThreadPoolService;
+import open.commons.core.concurrent.DefaultThreadFactory;
+import open.commons.core.concurrent.FixedThreadPoolService;
+import open.commons.core.utils.ByteUtils;
 import open.commons.pcap.dhcp.DhcpPacket;
-import open.commons.utils.ByteUtils;
 
 /**
  * 

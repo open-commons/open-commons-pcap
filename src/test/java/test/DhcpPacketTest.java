@@ -28,8 +28,8 @@ package test;
 
 import org.pcap4j.packet.IllegalRawDataException;
 
+import open.commons.core.utils.ByteUtils;
 import open.commons.pcap.dhcp.DhcpPacket;
-import open.commons.utils.ByteUtils;
 
 /**
  * 

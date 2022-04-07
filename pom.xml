@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>open.commons</groupId>
 	<artifactId>open-commons-pcap</artifactId>
-	<version>0.0.1</version>
+	<version>0.2.0-SNAPHOST</version>
 	<name>Open Commons for Packet Capture (Java 1.8 or higher)</name>
 
 	<url>http://maven.apache.org</url>
@@ -21,7 +21,7 @@
 		<!-- >>> begin: dependencies -->
 		<slf4j-api.version>1.7.32</slf4j-api.version>
 		
-		<open-commons-core.version>1.8.0-SNAPSHOT</open-commons-core.version>
+		<open-commons-core.version>2.0.0-SNAPSHOT</open-commons-core.version>
 		<!-- <<< end: dependencies -->
 
 

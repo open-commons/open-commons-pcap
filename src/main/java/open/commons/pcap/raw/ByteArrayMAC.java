@@ -29,7 +29,7 @@ package open.commons.pcap.raw;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import open.commons.utils.ByteUtils;
+import open.commons.core.utils.ByteUtils;
 
 /**
  * 

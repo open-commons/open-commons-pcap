@@ -31,8 +31,8 @@ import java.util.Arrays;
 import org.pcap4j.packet.AbstractPacket;
 import org.pcap4j.util.ByteArrays;
 
+import open.commons.core.utils.ByteUtils;
 import open.commons.pcap.raw.ByteArrayValue;
-import open.commons.utils.ByteUtils;
 
 /**
  * 

@@ -28,7 +28,7 @@ package open.commons.pcap.raw;
 
 import java.util.function.Function;
 
-import open.commons.utils.ByteUtils;
+import open.commons.core.utils.ByteUtils;
 
 /**
  * byte 배열을 정수로 표현하는 클래스.

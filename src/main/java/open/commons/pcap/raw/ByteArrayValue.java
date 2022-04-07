@@ -29,7 +29,7 @@ package open.commons.pcap.raw;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import open.commons.utils.ByteUtils;
+import open.commons.core.utils.ByteUtils;
 
 /**
  * 

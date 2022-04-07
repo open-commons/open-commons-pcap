@@ -48,8 +48,8 @@ import org.pcap4j.packet.namednumber.EtherType;
 import org.pcap4j.packet.namednumber.IpNumber;
 import org.pcap4j.util.NifSelector;
 
+import open.commons.core.utils.ByteUtils;
 import open.commons.pcap.dhcp.DhcpPacket;
-import open.commons.utils.ByteUtils;
 
 /**
  * 
