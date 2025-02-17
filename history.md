@@ -1,6 +1,6 @@
 [2025/02/17]
 - Dependencies:
-  + open.commons.core: 2.1.0-SNAPSHOT
+  + open-commons-core-dependencies: 2.1.0-SNAPSHOT
   
 [2024/10/31]
 - ETC

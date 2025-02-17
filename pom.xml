@@ -1,7 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>open.commons</groupId>
+	<parent>
+		<groupId>open.commons</groupId>
+		<artifactId>open-commons-core-dependencies</artifactId>
+		<version>2.1.0-SNAPSHOT</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
 	<artifactId>open-commons-pcap</artifactId>
 	<version>0.2.0-SNAPHOST</version>
 	<name>Open Commons for Packet Capture (Java 1.8 or higher)</name>
@@ -19,18 +23,8 @@
 		<compile.target.version>1.8</compile.target.version>
 
 		<!-- >>> begin: dependencies -->
-		<slf4j-api.version>1.7.32</slf4j-api.version>
-		
 		<open-commons-core.version>2.1.0-SNAPSHOT</open-commons-core.version>
 		<!-- <<< end: dependencies -->
-
-
-		<!-- >>> begin: plugin dependencies -->
-		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-		<maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
-		<maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-		<!-- >>> end: plugin dependencies -->
 	</properties>
 
 	<licenses>
