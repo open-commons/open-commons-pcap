@@ -59,7 +59,6 @@
 		<dependency>
 			<groupId>com.lmax</groupId>
 			<artifactId>disruptor</artifactId>
-			<version>3.3.6</version>
 		</dependency>
 		<!-- end: log4j2 -->
 
@@ -68,7 +67,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j-api.version}</version>
 		</dependency>
 		<!-- end: slf4j -->
 
