@@ -1,3 +1,7 @@
+[2025/02/17]
+- Dependencies:
+  + open.commons.core: 2.1.0-SNAPSHOT
+  
 [2024/10/31]
 - ETC
   + Maven Repository 주소 변경 (http -> https)
