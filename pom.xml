@@ -12,6 +12,29 @@
 	<description>Open Commons for Packet Capture Project</description>
 	<url>https://github.com/open-commons/open-commons-pcap</url>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<scm>
+		<connection>scm:git:https://github.com/open-commons/open-commons-core.git</connection>
+		<developerConnection>scm:git:https://github.com/open-commons/open-commons-core.git</developerConnection>
+		<url>https://github.com/open-commons/open-commons-core</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>Park, Jun-Hong</name>
+			<email>parkjunhong77@gmail.com</email>
+			<organization>https://github.com/open-commons</organization>
+			<organizationUrl>https://github.com/open-commons</organizationUrl>
+		</developer>
+	</developers>
+	
 	<properties>
 		<build.finalName>open-commons-pcap-${project.version}</build.finalName>
 
@@ -26,14 +49,6 @@
 		<open-commons-core.version>2.1.0-SNAPSHOT</open-commons-core.version>
 		<!-- <<< end: dependencies -->
 	</properties>
-
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
 
 	<distributionManagement>
 		<repository>
