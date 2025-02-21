@@ -4,6 +4,8 @@ Apply 'Maven Central Deployment'
 - Update
   + <deploymentManagement>
     + Release: Maven Central (https://central.sonatype.com)
+  + 'open.commons' dependencies 
+    + groupId: io.github.open-commons    
 - Add
   + <build>
     + org.sonatype.central:central-publishing-maven-plugin
