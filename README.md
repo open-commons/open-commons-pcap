@@ -10,8 +10,14 @@ See [history.md](./history.md).
 See [wiki](https://github.com/open-commons/open-commons-pcap/wiki)
 
 ---
-# Repository
-maven (**[Go to LATEST](http://nexus3.ymtech.co.kr/#browse/browse:maven-public:open%2Fcommons%2Fopen-commons-pcap)**)
+# 'release' Repository
+NOT YET (**[Go to LATEST](https://central.sonatype.com/artifact/io.github.open-commons/open-commons-pcap)**)
+
+# 'snapshot' Repository
+**[Go to LATEST](http://nexus3.ymtech.co.kr/#browse/browse:maven-public:open%2Fcommons%2Fopen-commons-pcap)**
+
+Add 'Repository'
+
 ``` xml
 <repositories>
   <repository>
@@ -21,12 +27,4 @@ maven (**[Go to LATEST](http://nexus3.ymtech.co.kr/#browse/browse:maven-public:o
     <layout>default</layout>
   </repository>
 </repositories>
-
-<dependency>
-  <groupId>io.github.open-commons</groupId
-  <artifactId>open-commons-pcap</artifactId>
-  <version>${open-commons-pcap.version}</version>
-</dependency>
 ```
-
-..
