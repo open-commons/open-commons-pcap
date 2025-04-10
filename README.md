@@ -11,7 +11,7 @@ See [wiki](https://github.com/open-commons/open-commons-pcap/wiki)
 
 ---
 # Repository
-maven (**[Go to LATEST](http://nexus3.ymtech.co.kr/#browse/browse:maven-public:open%2Fcommons%2Fopen-commons-core)**)
+maven (**[Go to LATEST](http://nexus3.ymtech.co.kr/#browse/browse:maven-public:open%2Fcommons%2Fopen-commons-pcap)**)
 ``` xml
 <repositories>
   <repository>
