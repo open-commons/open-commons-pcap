@@ -1,121 +1,125 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>io.github.open-commons</groupId>
-		<artifactId>open-commons-core-dependencies</artifactId>
-		<version>2.1.0-SNAPSHOT</version>
-		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-	<artifactId>open-commons-pcap</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
-	<name>Open Commons for Packet Capture (Java 1.8 or higher)</name>
-	<description>Open Commons for Packet Capture Project</description>
-	<url>https://github.com/open-commons/open-commons-pcap</url>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.github.open-commons</groupId>
+    <artifactId>open-commons-core-dependencies</artifactId>
+    <version>2.1.0-SNAPSHOT</version>
+    <relativePath /> <!-- lookup parent from repository -->
+  </parent>
+  <artifactId>open-commons-pcap</artifactId>
+  <version>0.2.0-SNAPSHOT</version>
+  <name>Open Commons for Packet Capture (Java 1.8 or higher)</name>
+  <description>Open Commons for Packet Capture Project</description>
+  <url>https://github.com/open-commons/open-commons-pcap</url>
 
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-	
-	<scm>
-		<connection>scm:git:https://github.com/open-commons/open-commons-core.git</connection>
-		<developerConnection>scm:git:https://github.com/open-commons/open-commons-core.git</developerConnection>
-		<url>https://github.com/open-commons/open-commons-core</url>
-	</scm>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-	<developers>
-		<developer>
-			<name>Park, Jun-Hong</name>
-			<email>parkjunhong77@gmail.com</email>
-			<organization>https://github.com/open-commons</organization>
-			<organizationUrl>https://github.com/open-commons</organizationUrl>
-		</developer>
-	</developers>
-	
-	<properties>
-		<build.finalName>open-commons-pcap-${project.version}</build.finalName>
+  <scm>
+    <connection>scm:git:https://github.com/open-commons/open-commons-core.git</connection>
+    <developerConnection>
+      scm:git:https://github.com/open-commons/open-commons-core.git</developerConnection>
+    <url>https://github.com/open-commons/open-commons-core</url>
+  </scm>
 
-		<encoding>UTF-8</encoding>
-		<java.version>1.8</java.version>
+  <developers>
+    <developer>
+      <name>Park, Jun-Hong</name>
+      <email>parkjunhong77@gmail.com</email>
+      <organization>https://github.com/open-commons</organization>
+      <organizationUrl>https://github.com/open-commons</organizationUrl>
+    </developer>
+  </developers>
 
-		<compile.encoding>UTF-8</compile.encoding>
-		<compile.source.version>1.8</compile.source.version>
-		<compile.target.version>1.8</compile.target.version>
+  <properties>
+    <build.finalName>open-commons-pcap-${project.version}</build.finalName>
 
-		<!-- >>> begin: dependencies -->
-		<open-commons-core.version>2.1.0-SNAPSHOT</open-commons-core.version>
-		<!-- <<< end: dependencies -->
-	</properties>
+    <encoding>UTF-8</encoding>
+    <java.version>1.8</java.version>
 
-	<distributionManagement>
-		<repository>
-			<id>maven-central</id>
-			<url>https://central.sonatype.com</url>
-		</repository>
-		<snapshotRepository>
-			<id>ymtech-maven-repo</id>
-			<name>Snapshot Repository</name>
-			<url>https://nexus3.ymtech.co.kr/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <compile.encoding>UTF-8</compile.encoding>
+    <compile.source.version>1.8</compile.source.version>
+    <compile.target.version>1.8</compile.target.version>
 
-	<dependencies>
-		<!-- ********************** -->
-		<!-- >>> begin: logging -->
+    <!-- >>> begin: dependencies -->
+    <open-commons-core.version>2.1.0-SNAPSHOT</open-commons-core.version>
+    <!-- <<< end: dependencies -->
+  </properties>
 
-		<!-- begin: log4j2 -->
-		<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
-		<!-- for llog4j-2.x: making all asynchronous loggers -->
-		<dependency>
-			<groupId>com.lmax</groupId>
-			<artifactId>disruptor</artifactId>
-		</dependency>
-		<!-- end: log4j2 -->
+  <distributionManagement>
+    <repository>
+      <id>maven-central</id>
+      <url>https://central.sonatype.com</url>
+    </repository>
+    <snapshotRepository>
+      <id>ymtech-maven-repo</id>
+      <name>Snapshot Repository</name>
+      <url>https://nexus3.ymtech.co.kr/repository/maven-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-		<!-- begin: slf4j -->
-		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<!-- end: slf4j -->
+  <dependencies>
+    <!-- ********************** -->
+    <!-- >>> begin: logging -->
 
-		<!-- <<< end: logging -->
-		<!-- ********************** -->
+    <!-- begin: log4j2 -->
+    <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+    <!-- for llog4j-2.x: making all asynchronous loggers -->
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+    </dependency>
+    <!-- end: log4j2 -->
 
-		<!-- ************** -->
-		<!-- >>> begin: open-commons -->
-		<!-- begin: open-commons-core -->
-		<dependency>
-			<groupId>io.github.open-commons</groupId>
-			<artifactId>open-commons-core</artifactId>
-			<version>${open-commons-core.version}</version>
-		</dependency>
-		<!-- end: open-commons-core -->
-		<!-- <<< end: open-commons -->
-		<!-- ************** -->
+    <!-- begin: slf4j -->
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <!-- end: slf4j -->
 
-		<!-- ************** -->
-		<!-- begin: pcap4j -->
-		<dependency>
-			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-core</artifactId>
-			<version>1.8.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.pcap4j</groupId>
-			<artifactId>pcap4j-packetfactory-static</artifactId>
-			<version>1.8.2</version>
-		</dependency>
-		<!-- end: pcap4j -->
-		<!-- ************** -->
+    <!-- <<< end: logging -->
+    <!-- ********************** -->
+
+    <!-- ************** -->
+    <!-- >>> begin: open-commons -->
+    <!-- begin: open-commons-core -->
+    <dependency>
+      <groupId>io.github.open-commons</groupId>
+      <artifactId>open-commons-core</artifactId>
+      <version>${open-commons-core.version}</version>
+    </dependency>
+    <!-- end: open-commons-core -->
+    <!-- <<< end: open-commons -->
+    <!-- ************** -->
+
+    <!-- ************** -->
+    <!-- begin: pcap4j -->
+    <dependency>
+      <groupId>org.pcap4j</groupId>
+      <artifactId>pcap4j-core</artifactId>
+      <version>1.8.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.pcap4j</groupId>
+      <artifactId>pcap4j-packetfactory-static</artifactId>
+      <version>1.8.2</version>
+    </dependency>
+    <!-- end: pcap4j -->
+    <!-- ************** -->
 
     <!-- ************** -->
     <!-- >>> begin: Validation -->
-    <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+    <!--
+    https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
@@ -128,117 +132,117 @@
     <!-- <<< end: Validation -->
     <!-- ************** -->
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<finalName>${build.finalName}</finalName>
-		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>src/main/java</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-			</resource>
-			<resource>
-				<directory>${project.basedir}</directory>
-				<includes>
-					<include>LICENSE</include>
-				</includes>
-				<targetPath>META-INF</targetPath>
-			</resource>
-		</resources>
-		<plugins>
-			<!-- >>> begin: compile -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<encoding>${compile.encoding}</encoding>
-					<source>${compile.source.version}</source>
-					<target>${compile.target.version}</target>
-				</configuration>
-			</plugin>
-			<!-- <<< end: compile -->
+  <build>
+    <finalName>${build.finalName}</finalName>
+    <defaultGoal>install</defaultGoal>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.*</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${project.basedir}</directory>
+        <includes>
+          <include>LICENSE</include>
+        </includes>
+        <targetPath>META-INF</targetPath>
+      </resource>
+    </resources>
+    <plugins>
+      <!-- >>> begin: compile -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <encoding>${compile.encoding}</encoding>
+          <source>${compile.source.version}</source>
+          <target>${compile.target.version}</target>
+        </configuration>
+      </plugin>
+      <!-- <<< end: compile -->
 
-			<!-- >>> begin: source -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<configuration>
-					<encoding>UTF-8</encoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- <<< end: source -->
-			<!-- >>> begin: javadoc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<configuration>
-					<goal>deploy</goal>
-					<show>private</show>
-					<nohelp>true</nohelp>
-					<additionalOptions>
-						<additionalOption>-Xdoclint:none</additionalOption>
-					</additionalOptions>
-					<charset>${encoding}</charset>
-					<docencoding>${encoding}</docencoding>
-					<encoding>${encoding}</encoding>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- <<< end: javadoc -->
-			
-			<!-- Maven Central Deployment plugin -->
-			<plugin>
-				<groupId>org.sonatype.central</groupId>
-				<artifactId>central-publishing-maven-plugin</artifactId>
-				<version>0.7.0</version>
-				<extensions>true</extensions>
-				<configuration>
-					<publishingServerId>maven-central</publishingServerId>
-					<!-- autoPublish>true</autoPublish>
+      <!-- >>> begin: source -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <configuration>
+          <encoding>UTF-8</encoding>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- <<< end: source -->
+      <!-- >>> begin: javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <goal>deploy</goal>
+          <show>private</show>
+          <nohelp>true</nohelp>
+          <additionalOptions>
+            <additionalOption>-Xdoclint:none</additionalOption>
+          </additionalOptions>
+          <charset>${encoding}</charset>
+          <docencoding>${encoding}</docencoding>
+          <encoding>${encoding}</encoding>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- <<< end: javadoc -->
+
+      <!-- Maven Central Deployment plugin -->
+      <plugin>
+        <groupId>org.sonatype.central</groupId>
+        <artifactId>central-publishing-maven-plugin</artifactId>
+        <version>0.7.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <publishingServerId>maven-central</publishingServerId>
+          <!-- autoPublish>true</autoPublish>
              		<waitUntil>published</waitUntil -->
-				</configuration>
-			</plugin>
-			<!-- GPG signature plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
-				<executions>
-					<execution>
-						<id>sign-artifacts</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>sign</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+        </configuration>
+      </plugin>
+      <!-- GPG signature plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>
