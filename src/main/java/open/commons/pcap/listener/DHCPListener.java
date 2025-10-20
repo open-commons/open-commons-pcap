@@ -101,7 +101,7 @@ public class DHCPListener implements PacketListener {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 15.		박준홍			최초 작성
+     * 2020. 12. 15.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param listener
@@ -129,7 +129,7 @@ public class DHCPListener implements PacketListener {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 15.		박준홍			최초 작성
+     * 2020. 12. 15.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param listeners
@@ -157,7 +157,7 @@ public class DHCPListener implements PacketListener {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 15.		박준홍			최초 작성
+     * 2020. 12. 15.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param listeners
@@ -182,7 +182,7 @@ public class DHCPListener implements PacketListener {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 15.		박준홍			최초 작성
+     * 2020. 12. 15.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param packet
@@ -276,7 +276,7 @@ public class DHCPListener implements PacketListener {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 15.		박준홍			최초 작성
+     * 2020. 12. 15.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @return

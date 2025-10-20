@@ -57,7 +57,7 @@ public class DefaultByteArrayValue<T> extends ByteArrayValue<T> {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @return

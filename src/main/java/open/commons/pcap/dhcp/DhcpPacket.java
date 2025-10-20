@@ -83,7 +83,7 @@ public class DhcpPacket extends AbstractPacket {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 16.		박준홍			최초 작성
+     * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @return
@@ -105,7 +105,7 @@ public class DhcpPacket extends AbstractPacket {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @return
@@ -127,7 +127,7 @@ public class DhcpPacket extends AbstractPacket {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @return
@@ -149,7 +149,7 @@ public class DhcpPacket extends AbstractPacket {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 16.		박준홍			최초 작성
+     * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param rawData
@@ -279,7 +279,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 16.		박준홍			최초 작성
+         * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @return
@@ -301,7 +301,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param chaddr
@@ -323,7 +323,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param ciaddr
@@ -345,7 +345,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 16.		박준홍			최초 작성
+         * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param correctChecksumAtBuild
@@ -369,7 +369,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 16.		박준홍			최초 작성
+         * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param correctLengthAtBuild
@@ -393,7 +393,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param file
@@ -415,7 +415,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param flags
@@ -437,7 +437,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param giaddr
@@ -459,7 +459,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param hlen
@@ -481,7 +481,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param hops
@@ -503,7 +503,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param htype
@@ -525,7 +525,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param xid
@@ -547,7 +547,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param op
@@ -569,7 +569,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param options
@@ -591,7 +591,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param secs
@@ -613,7 +613,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param siaddr
@@ -635,7 +635,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param sname
@@ -657,7 +657,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 23.		박준홍			최초 작성
+         * 2020. 12. 23.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @param yiaddr
@@ -1023,7 +1023,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 17.		박준홍			최초 작성
+         * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @return
@@ -1067,7 +1067,7 @@ public class DhcpPacket extends AbstractPacket {
          * [개정이력]
          *      날짜    	| 작성자	|	내용
          * ------------------------------------------
-         * 2020. 12. 16.		박준홍			최초 작성
+         * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
          * </pre>
          *
          * @return

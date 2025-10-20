@@ -68,7 +68,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      * [개정이력]
      *      날짜    	| 작성자	|	내용
      * ------------------------------------------
-     * 2020. 12. 17.		박준홍			최초 작성
+     * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
      * </pre>
      *
      * @param o
@@ -91,7 +91,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      * [개정이력]
      *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.        박준홍         최초 작성
+     * 2020. 12. 17.        parkjunhong77@gmail.com         최초 작성
      * </pre>
      *
      * @return
@@ -114,7 +114,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      * [개정이력]
      *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.        박준홍         최초 작성
+     * 2020. 12. 17.        parkjunhong77@gmail.com         최초 작성
      * </pre>
      *
      * @param value
@@ -140,7 +140,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      * [개정이력]
      *      날짜      | 작성자   |   내용
      * ------------------------------------------
-     * 2020. 12. 17.        박준홍         최초 작성
+     * 2020. 12. 17.        parkjunhong77@gmail.com         최초 작성
      * </pre>
      *
      * @param opcode
