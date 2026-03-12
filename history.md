@@ -1,3 +1,8 @@
+[2026/03/12]
+- Dependencies
+  + Delete
+    + com.google.code.findbugs:jsr305:3.0.2
+    
 [2026/03/11]
 - SNAPSHOT: 3.0.0-SHAPSHOT
 - Migration JDK 1.8 to JDK 25
