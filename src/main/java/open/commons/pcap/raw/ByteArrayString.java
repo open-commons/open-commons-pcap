@@ -37,9 +37,8 @@ import java.util.function.Function;
  */
 public class ByteArrayString extends DefaultByteArrayValue<String> {
 
-    private static final Function<byte[], String> REJECT_TERMINATED = bs -> {
-        return ByteArrayValue.readAsString(bs);
-    };
+    @SuppressWarnings("null")
+    private static final Function<byte[], String> REJECT_TERMINATED = bs -> ByteArrayValue.readAsString(bs);
 
     /**
      * 기본 생성자

@@ -28,11 +28,14 @@ package open.commons.pcap.dhcp;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.pcap4j.packet.namednumber.NamedNumber;
 
 import open.commons.core.utils.IntegerUtils;
 import open.commons.core.utils.NumberUtils;
+import open.commons.core.utils.ObjectUtils;
 
 /**
  * DHCP Operation Code
@@ -63,6 +66,8 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @since 2020. 12. 17.
      */
     public DhcpOpCode(Byte value, String name) {
+        ObjectUtils.requireNonNulls(value, name);
+
         super(value, name);
     }
 
@@ -80,12 +85,15 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.namednumber.NamedNumber#compareTo(org.pcap4j.packet.namednumber.NamedNumber)
      */
     @Override
-    public int compareTo(DhcpOpCode o) {
+    public int compareTo(@Nullable DhcpOpCode o) {
+        if (o == null) {
+            return -1;
+        }
+
         return value().compareTo(o.value());
     }
 
@@ -102,10 +110,14 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.namednumber.NamedNumber#valueAsString()
      */
+    // 아래 내용에 적용됨.
+    // - String.valueOf(...)
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     @Override
     public String valueAsString() {
         return String.valueOf(value() & 0xFF);
@@ -127,8 +139,12 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      *
      * @since 2020. 12. 17.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
+    // 아래 내용에 적용됨.
+    // - Map.get(...)
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     public static DhcpOpCode getInstance(Byte value) {
         if (registry.containsKey(value)) {
             return registry.get(value);
@@ -153,9 +169,10 @@ public class DhcpOpCode extends NamedNumber<Byte, DhcpOpCode> {
      *
      * @since 2020. 12. 17.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
-    public static DhcpOpCode register(DhcpOpCode opcode) {
+    public static @Nullable DhcpOpCode register(DhcpOpCode opcode) {
+        Objects.requireNonNull(opcode);
+
         return registry.put(opcode.value(), opcode);
     }
 

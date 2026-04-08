@@ -29,7 +29,9 @@ package open.commons.pcap.dhcp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.jspecify.annotations.Nullable;
 import org.pcap4j.packet.AbstractPacket;
 import org.pcap4j.packet.ChecksumBuilder;
 import org.pcap4j.packet.IllegalRawDataException;
@@ -56,8 +58,9 @@ public class DhcpPacket extends AbstractPacket {
     private static final long serialVersionUID = 6846747913243110164L;
 
     private final DhcpHeader header;
-    private final DhcpOptions payload;
+    private final @Nullable DhcpOptions payload;
 
+    @SuppressWarnings("null")
     private DhcpPacket(Builder builder) {
         this.header = new DhcpHeader(builder, builder.options);
         this.payload = builder.options != null //
@@ -89,7 +92,6 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 16.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getBuilder()
      */
@@ -111,7 +113,6 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getHeader()
      */
@@ -133,12 +134,11 @@ public class DhcpPacket extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getPayload()
      */
     @Override
-    public Packet getPayload() {
+    public @Nullable Packet getPayload() {
         return this.payload;
     }
 
@@ -163,7 +163,6 @@ public class DhcpPacket extends AbstractPacket {
      *
      * @since 2020. 12. 16.
      * @version _._._
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static DhcpPacket newPacket(byte[] rawData, int offset, int length) throws IllegalRawDataException {
         ByteArrays.validateBounds(rawData, offset, length);
@@ -252,7 +251,7 @@ public class DhcpPacket extends AbstractPacket {
          * Optional parameters field. See the options documents for a list of defined options.<br>
          * payloadRaw bytes array
          */
-        private byte[] options;
+        private byte @Nullable [] options;
 
         public Builder(DhcpPacket packet) {
             this.op = packet.header.op;
@@ -285,7 +284,6 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.LengthBuilder#build()
          */
@@ -352,12 +350,11 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.ChecksumBuilder#correctChecksumAtBuild(boolean)
          */
         @Override
-        public ChecksumBuilder<DhcpPacket> correctChecksumAtBuild(boolean correctChecksumAtBuild) {
+        public @Nullable ChecksumBuilder<DhcpPacket> correctChecksumAtBuild(boolean correctChecksumAtBuild) {
             // Not supported
             return null;
         }
@@ -376,12 +373,11 @@ public class DhcpPacket extends AbstractPacket {
          * @return
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.LengthBuilder#correctLengthAtBuild(boolean)
          */
         @Override
-        public LengthBuilder<DhcpPacket> correctLengthAtBuild(boolean correctLengthAtBuild) {
+        public @Nullable LengthBuilder<DhcpPacket> correctLengthAtBuild(boolean correctLengthAtBuild) {
             // Not supported
             return null;
         }
@@ -717,7 +713,6 @@ public class DhcpPacket extends AbstractPacket {
                       Figure 1:  Format of a DHCP message
      * </pre>
      * 
-     * 
      * <pre>
      *    FIELD      OCTETS       DESCRIPTION
        -----      ------       -----------
@@ -758,7 +753,6 @@ public class DhcpPacket extends AbstractPacket {
      * 
      * @since 2020. 12. 16.
      * @version 0.1.0
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
     public static final class DhcpHeader extends AbstractHeader {
 
@@ -947,12 +941,12 @@ public class DhcpPacket extends AbstractPacket {
          * 
          * @see #OPTIONS_OFFSET
          */
-        private final byte[] options;
+        private final byte @Nullable [] options;
 
         /** raw bytes array */
         private final byte[] rawData;
 
-        private DhcpHeader(Builder builder, byte[] payload) {
+        private DhcpHeader(Builder builder, byte @Nullable [] payload) {
 
             this.op = builder.op;
             this.htype = builder.htype;
@@ -968,27 +962,41 @@ public class DhcpPacket extends AbstractPacket {
             this.chaddr = builder.chaddr;
             this.sname = builder.sname;
             this.file = builder.file;
-            this.options = payload;
 
-            this.rawData = ArrayUtils.merge( //
-                    new byte[] { this.op.value() } //
-                    , ByteArrays.toByteArray(this.htype.value()) //
-                    , new byte[] { this.hlen.value() } //
-                    , this.hops.getRawData() //
-                    , this.xid.getRawData() //
-                    , this.secs.getRawData() //
-                    , this.flags.getRawData() //
-                    , this.ciaddr.getRawData() //
-                    , this.yiaddr.getRawData() //
-                    , this.siaddr.getRawData() //
-                    , this.giaddr.getRawData() //
-                    , this.chaddr.getRawData() //
-                    , this.sname.getRawData() //
-                    , this.file.getRawData() //
-                    , payload //
+            // [PATCH] 외부 배열의 참조를 끊어 불변성을 보장하기 위한 방어적 복사 (Defensive Copy)
+            this.options = payload != null ? payload.clone() : null;
+
+            this.rawData = Objects.requireNonNull( //
+                    ArrayUtils.merge( //
+                            new byte[] { this.op.value() } //
+                            , ByteArrays.toByteArray(this.htype.value()) //
+                            , new byte[] { this.hlen.value() } //
+                            , this.hops.getRawData() //
+                            , this.xid.getRawData() //
+                            , this.secs.getRawData() //
+                            , this.flags.getRawData() //
+                            , this.ciaddr.getRawData() //
+                            , this.yiaddr.getRawData() //
+                            , this.siaddr.getRawData() //
+                            , this.giaddr.getRawData() //
+                            , this.chaddr.getRawData() //
+                            , this.sname.getRawData() //
+                            , this.file.getRawData() //
+                            // [PATCH] payload가 null일 경우 NPE 방지를 위해 빈 배열(Zero-Length Array)로 대체
+                            , payload != null ? payload : new byte[0] //
+                    ) //
             );
         }
 
+        // 아래 내용에 적용됨.
+        // - Arrays.copyOfRange(...)
+        // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+        // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+        // 아래 내용에 적용됨.
+        // - ArpHardwareType.getInstance(...)
+        // [PATCH] [3rdParty-Null] 외부 API의 JSpecify 미지원 '우회용' 어노테이션.
+        // [TODO] 향후 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+        @SuppressWarnings("null")
         private DhcpHeader(byte[] rawData, int offset, int length) throws IllegalRawDataException {
             if (length < OPTIONS_OFFSET) {
                 StringBuilder sb = new StringBuilder(80);
@@ -1017,22 +1025,29 @@ public class DhcpPacket extends AbstractPacket {
         }
 
         /**
-         * <br>
+         * DHCP 헤더 정보를 사람이 읽을 수 있는 문자열 형식으로 변환하여 제공합니다.<br>
+         * *
          * 
          * <pre>
          * [개정이력]
-         *      날짜    	| 작성자	|	내용
+         * 날짜       | 작성자   |   내용
          * ------------------------------------------
-         * 2020. 12. 17.		parkjunhong77@gmail.com			최초 작성
+         * 2020. 12. 17.        parkjunhong77@gmail.com         최초 작성
+         * 2026. 4. 8.          parkjunhong77@gmail.com         (3.0.0) GEM Javadoc 규격 적용 및 null 방어
          * </pre>
          *
-         * @return
+         * @return 헤더의 각 필드와 값을 포맷팅한 문자열 (절대 {@code null}이 아님)
          *
          * @since 2020. 12. 17.
-         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
+         * @version 3.0.0
          *
          * @see org.pcap4j.packet.AbstractPacket.AbstractHeader#buildString()
          */
+        // 아래 내용에 적용됨.
+        // - StringBuilder.toString()
+        // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+        // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+        @SuppressWarnings("null")
         @Override
         protected String buildString() {
             final String FORMAT = "  %-9s %-15s: %s\n";
@@ -1055,25 +1070,30 @@ public class DhcpPacket extends AbstractPacket {
             builder.append(String.format(FORMAT, "(chaddr)", "Client H/W", this.chaddr));
             builder.append(String.format(FORMAT, "(sname)", "Server Name", this.sname));
             builder.append(String.format(FORMAT, "(file)", "Boot File Name", this.file));
-            builder.append(String.format(FORMAT, "(options)", "Options", ByteUtils.hexBinString("0x", this.options)));
+
+            // [PATCH] options가 null일 경우 ByteUtils에서 발생할 수 있는 NPE를 방어
+            String optionsStr = this.options != null ? ByteUtils.hexBinString("0x", this.options) : "None";
+            builder.append(String.format(FORMAT, "(options)", "Options", optionsStr));
 
             return builder.toString();
         }
 
         /**
-         * <br>
+         * 헤더를 구성하는 각 필드의 원시 바이트 배열({@code byte[]}) 목록을 제공합니다.<br>
+         * *
          * 
          * <pre>
          * [개정이력]
-         *      날짜    	| 작성자	|	내용
+         * 날짜       | 작성자   |   내용
          * ------------------------------------------
-         * 2020. 12. 16.		parkjunhong77@gmail.com			최초 작성
+         * 2020. 12. 16.        parkjunhong77@gmail.com         최초 작성
+         * 2026. 4. 8.          parkjunhong77@gmail.com         (3.0.0) GEM Javadoc 규격 적용 및 반환 타입 Nullability 문서화
          * </pre>
          *
-         * @return
+         * @return 헤더 필드별 바이트 배열 리스트. <br>
+         *         반환되는 {@link List} 객체 자체와 그 내부의 모든 {@code byte[]} 원소는 절대 {@code null}이 아님을 보장함.
          *
          * @since 2020. 12. 16.
-         * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
          *
          * @see org.pcap4j.packet.AbstractPacket.AbstractHeader#getRawFields()
          */

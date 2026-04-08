@@ -28,6 +28,7 @@ package open.commons.pcap.raw;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.Objects;
 
 import open.commons.core.utils.ByteUtils;
 
@@ -48,6 +49,8 @@ public abstract class ByteArrayValue<T> {
      * @since 2020. 12. 17.
      */
     public ByteArrayValue(byte[] rawData) {
+        Objects.requireNonNull(rawData);
+
         this.rawData = rawData;
     }
 
@@ -59,6 +62,11 @@ public abstract class ByteArrayValue<T> {
      *
      * @since 2020. 12. 17.
      */
+    // 아래 내용에 적용됨.
+    // - Arrays.copyOf(...)
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     public byte[] getRawData() {
         return Arrays.copyOf(this.rawData, this.rawData.length);
     }
@@ -76,10 +84,14 @@ public abstract class ByteArrayValue<T> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see java.lang.Object#toString()
      */
+    // 아래 내용에 적용됨.
+    // - StringBuilder.toString()
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -104,9 +116,12 @@ public abstract class ByteArrayValue<T> {
      * @return
      *
      * @since 2020. 12. 17.
-     * @version _._._
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      */
+    // 아래 내용에 적용됨.
+    // - StringBuilder.toString()
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     public static String readAsString(byte[] bytes) {
         String str = new String(bytes, Charset.forName("UTF-8"));
         if (str.trim().isEmpty()) {

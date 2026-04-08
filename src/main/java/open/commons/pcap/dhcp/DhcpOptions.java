@@ -28,6 +28,7 @@ package open.commons.pcap.dhcp;
 
 import java.util.Arrays;
 
+import org.jspecify.annotations.Nullable;
 import org.pcap4j.packet.AbstractPacket;
 import org.pcap4j.util.ByteArrays;
 
@@ -53,6 +54,7 @@ public class DhcpOptions extends AbstractPacket {
      * 
      * @since 2020. 12. 17.
      */
+    @SuppressWarnings("null")
     private DhcpOptions(byte[] rawData, int offset, int length) {
         this.rawData = Arrays.copyOfRange(rawData, offset, offset + length);
     }
@@ -70,10 +72,14 @@ public class DhcpOptions extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#buildString()
      */
+    // 아래 내용에 적용됨.
+    // - StringBuilder.toString()
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     @Override
     protected String buildString() {
 
@@ -103,12 +109,11 @@ public class DhcpOptions extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getBuilder()
      */
     @Override
-    public Builder getBuilder() {
+    public @Nullable Builder getBuilder() {
         return null;
     }
 
@@ -125,10 +130,14 @@ public class DhcpOptions extends AbstractPacket {
      * @return
      *
      * @since 2020. 12. 17.
-     * @author Park_Jun_Hong_(parkjunhong77@gmail.com)
      *
      * @see org.pcap4j.packet.AbstractPacket#getRawData()
      */
+    // 아래 내용에 적용됨.
+    // - Arrays.copyOf(...)
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     @Override
     public byte[] getRawData() {
         return Arrays.copyOf(this.rawData, 0);

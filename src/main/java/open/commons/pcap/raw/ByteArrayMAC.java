@@ -39,6 +39,11 @@ import open.commons.core.utils.ByteUtils;
  */
 public class ByteArrayMAC extends DefaultByteArrayValue<String> {
 
+    // 아래 내용에 적용됨.
+    // - Arrays.copyOfRange(...)
+    // [PATCH] [JDK-Null] JDK 표준 API의 JSpecify 미지원 '우회용' 어노테이션.
+    // [TODO] 향후 JDK 자체 지원 또는 외부 Stub 환경이 갖춰지면 '제거'
+    @SuppressWarnings("null")
     public static final Function<byte[], String> EXPR_MAC = bs -> {
         return ByteUtils.toMACExpr(Arrays.copyOfRange(bs, 0, Math.min(6, bs.length)));
     };

@@ -39,6 +39,7 @@ import open.commons.core.utils.ByteUtils;
  */
 public class ByteArrayInteger extends DefaultByteArrayValue<Integer> {
 
+    @SuppressWarnings("null")
     private static final Function<byte[], Integer> DEFAULT_EXPR_INTEGER = bs -> ByteUtils.toInt(bs);
 
     /**
@@ -47,7 +48,7 @@ public class ByteArrayInteger extends DefaultByteArrayValue<Integer> {
      * @since 2020. 12. 17.
      */
     public ByteArrayInteger(byte[] rawData) {
-        this(rawData, DEFAULT_EXPR_INTEGER);
+        super(rawData, DEFAULT_EXPR_INTEGER);
     }
 
     /**
