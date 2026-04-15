@@ -28,7 +28,7 @@ package open.commons.pcap.raw;
 
 import java.util.function.Function;
 
-import open.commons.core.utils.ObjectUtils;
+import open.commons.core.utils.AssertUtils2;
 
 /**
  * byte 배열을 표현하는 기본 클래스.
@@ -48,7 +48,7 @@ public class DefaultByteArrayValue<T> extends ByteArrayValue<T> {
      * @since 2020. 12. 17.
      */
     public DefaultByteArrayValue(byte[] rawData, Function<byte[], T> expr) {
-        ObjectUtils.requireNonNulls(rawData, expr);
+        AssertUtils2.notNulls(rawData, expr);
 
         super(rawData);
         this.exprFunc = expr;

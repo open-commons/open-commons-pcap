@@ -33,9 +33,9 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 import org.pcap4j.packet.namednumber.NamedNumber;
 
+import open.commons.core.utils.AssertUtils2;
 import open.commons.core.utils.IntegerUtils;
 import open.commons.core.utils.NumberUtils;
-import open.commons.core.utils.ObjectUtils;
 
 /**
  * 
@@ -61,7 +61,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      * @since 2020. 12. 17.
      */
     protected DhcpHardwareLength(Byte value, String name) {
-        ObjectUtils.requireNonNulls(value, name);
+        AssertUtils2.notNulls(value, name);
         
         super(value, name);
     }
