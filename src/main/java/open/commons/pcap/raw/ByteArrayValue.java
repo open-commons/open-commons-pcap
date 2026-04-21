@@ -103,7 +103,8 @@ public abstract class ByteArrayValue<T> {
     }
 
     /**
-     * byte 배열을 문자열로 반환한다. 단, <code>terminated</code> 캐릭터인 경우 빈문자열("")을 반환한다. <br>
+     * byte 배열을 문자열로 반환한다. 단, <code>terminated</code> 캐릭터인 경우 빈문자열("")을 반환한다.
+     * <br>
      * 
      * <pre>
      * [개정이력]

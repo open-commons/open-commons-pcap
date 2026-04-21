@@ -72,11 +72,13 @@ public class DhcpPacket extends AbstractPacket {
         this.header = new DhcpHeader(rawData, offset, length);
         int payloadLen = rawData.length - header.length() - offset;
         if (payloadLen < 0) {
-            throw ExceptionUtils.newException(IllegalRawDataException.class, "The length of payload seems to be wrong. raw.length=%,d, offset=%,d, header.length=%,d",
+            throw ExceptionUtils.newException(IllegalRawDataException.class,
+                    "The length of payload seems to be wrong. raw.length=%,d, offset=%,d, header.length=%,d",
                     rawData.length, offset, header.length());
         }
 
-        this.payload = DhcpOptions.newPacket(rawData, offset + DhcpHeader.OPTIONS_OFFSET, length - DhcpHeader.OPTIONS_OFFSET);
+        this.payload = DhcpOptions.newPacket(rawData, offset + DhcpHeader.OPTIONS_OFFSET,
+                length - DhcpHeader.OPTIONS_OFFSET);
     }
 
     /**
@@ -169,7 +171,8 @@ public class DhcpPacket extends AbstractPacket {
         return new DhcpPacket(rawData, offset, length);
     }
 
-    public static final class Builder extends AbstractBuilder implements LengthBuilder<DhcpPacket>, ChecksumBuilder<DhcpPacket> {
+    public static final class Builder extends AbstractBuilder
+            implements LengthBuilder<DhcpPacket>, ChecksumBuilder<DhcpPacket> {
 
         /**
          * <pre>
@@ -179,7 +182,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private DhcpOpCode op;
         /**
-         * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb ethernet.
+         * Hardware address type, see ARP section in "Assigned Numbers" RFC;
+         * e.g., '1' = 10mb ethernet.
          */
         private ArpHardwareType htype;
         /**
@@ -187,16 +191,19 @@ public class DhcpPacket extends AbstractPacket {
          */
         private DhcpHardwareLength hlen;
         /**
-         * Client sets to zero, optionally used by relay agents when booting via a relay agent.
+         * Client sets to zero, optionally used by relay agents when booting via
+         * a relay agent.
          */
         private ByteArrayInteger hops;
         /**
-         * Transaction ID, a random number chosen by the client, used by the client and server to associate messages and
-         * responses between a client and a server.
+         * Transaction ID, a random number chosen by the client, used by the
+         * client and server to associate messages and responses between a
+         * client and a server.
          */
         private ByteArrayInteger xid;
         /**
-         * Filled in by client, seconds elapsed since client began address acquisition or renewal process.
+         * Filled in by client, seconds elapsed since client began address
+         * acquisition or renewal process.
          */
         private ByteArrayInteger secs;
 
@@ -217,8 +224,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayInteger flags;
         /**
-         * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP
-         * requests.
+         * Client IP address; only filled in if client is in BOUND, RENEW or
+         * REBINDING state and can respond to ARP requests.
          */
         private ByteArrayString ciaddr;
         /**
@@ -226,7 +233,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayString yiaddr;
         /**
-         * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
+         * IP address of next server to use in bootstrap; returned in DHCPOFFER,
+         * DHCPACK by server.
          */
         private ByteArrayString siaddr;
         /**
@@ -242,13 +250,14 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayString sname;
         /**
-         * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified
-         * directory-path name in DHCPOFFER.
+         * Boot file name, null terminated string; "generic" name or null in
+         * DHCPDISCOVER, fully qualified directory-path name in DHCPOFFER.
          */
         private ByteArrayString file;
 
         /**
-         * Optional parameters field. See the options documents for a list of defined options.<br>
+         * Optional parameters field. See the options documents for a list of
+         * defined options.<br>
          * payloadRaw bytes array
          */
         private byte @Nullable [] options;
@@ -672,7 +681,8 @@ public class DhcpPacket extends AbstractPacket {
     /**
      * References:
      * <ul>
-     * <li><a href="https://tools.ietf.org/html/rfc2131">https://tools.ietf.org/html/rfc2131</a>
+     * <li><a href=
+     * "https://tools.ietf.org/html/rfc2131">https://tools.ietf.org/html/rfc2131</a>
      * <li><a href=
      * "http://www.tcpipguide.com/free/t_DHCPMessageFormat.htm">http://www.tcpipguide.com/free/t_DHCPMessageFormat.htm</a>
      * </ul>
@@ -780,7 +790,10 @@ public class DhcpPacket extends AbstractPacket {
         public static final int SERVER_IP_ADDRESS_HEADER_SIZE = 0x04;
         /** Header Length: Gateway IP Address (giaddr) / 4 bytes (32 bits) */
         public static final int GATEWAY_IP_ADDRESS_HEADER_SIZE = 0x04;
-        /** Header Length: Client Hardware Address (chaddr) / 16 bytes (128 bites) */
+        /**
+         * Header Length: Client Hardware Address (chaddr) / 16 bytes (128
+         * bites)
+         */
         public static final int CLIENT_HW_ADDRESS_HEADER_SIZE = 0x10;
         /** Header Length: Server Name (sname) (sname) / 64 bytes (512 bits) */
         public static final int SERVER_NAME_HEADER_SIZE = 0x40;
@@ -809,7 +822,9 @@ public class DhcpPacket extends AbstractPacket {
         public static final int SERVER_IP_ADDRESS_OFFSET = YOUR_IP_ADDRESS_OFFSET + YOUR_IP_ADDRESS_HEADER_SIZE;
         /** Header Index: Gateway IP Address (giaddr) / 4 bytes (32 bits) */
         public static final int GATEWAY_IP_ADDRESS_OFFSET = SERVER_IP_ADDRESS_OFFSET + SERVER_IP_ADDRESS_HEADER_SIZE;
-        /** Header Index: Client Hardware Address (chaddr) / 16 bytes (128 bites) */
+        /**
+         * Header Index: Client Hardware Address (chaddr) / 16 bytes (128 bites)
+         */
         public static final int CLIENT_HW_ADDRESS_OFFSET = GATEWAY_IP_ADDRESS_OFFSET + GATEWAY_IP_ADDRESS_HEADER_SIZE;
         /** Header Index: Server Name (sname) (sname) / 64 bytes (512 bits) */
         public static final int SERVER_NAME_OFFSET = CLIENT_HW_ADDRESS_OFFSET + CLIENT_HW_ADDRESS_HEADER_SIZE;
@@ -829,7 +844,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final DhcpOpCode op;
         /**
-         * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb ethernet.
+         * Hardware address type, see ARP section in "Assigned Numbers" RFC;
+         * e.g., '1' = 10mb ethernet.
          * 
          * @see #HW_TYPE_HEADER_SIZE
          * @see #HW_TYPE_OFFSET
@@ -843,22 +859,25 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final DhcpHardwareLength hlen;
         /**
-         * Client sets to zero, optionally used by relay agents when booting via a relay agent.
+         * Client sets to zero, optionally used by relay agents when booting via
+         * a relay agent.
          * 
          * @see #HOPS_HEADER_SIZE
          * @see #HOPS_OFFSET
          */
         private final ByteArrayInteger hops;
         /**
-         * Transaction ID, a random number chosen by the client, used by the client and server to associate messages and
-         * responses between a client and a server.
+         * Transaction ID, a random number chosen by the client, used by the
+         * client and server to associate messages and responses between a
+         * client and a server.
          * 
          * @see #TRANSACTION_ID_HEADER_SIZE
          * @see #TRANSACTION_ID_OFFSET
          */
         private final ByteArrayInteger xid;
         /**
-         * Filled in by client, seconds elapsed since client began address acquisition or renewal process.
+         * Filled in by client, seconds elapsed since client began address
+         * acquisition or renewal process.
          * 
          * @see #SECONDS_HEADER_SIZE
          * @see #SECONDS_OFFSET
@@ -885,8 +904,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayInteger flags;
         /**
-         * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can respond to ARP
-         * requests.
+         * Client IP address; only filled in if client is in BOUND, RENEW or
+         * REBINDING state and can respond to ARP requests.
          * 
          * @see #CLIENT_IP_ADDRESS_HEADER_SIZE
          * @see #CLIENT_IP_ADDRESS_OFFSET
@@ -900,7 +919,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayString yiaddr;
         /**
-         * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
+         * IP address of next server to use in bootstrap; returned in DHCPOFFER,
+         * DHCPACK by server.
          * 
          * @see #SERVER_IP_ADDRESS_HEADER_SIZE
          * @see #SERVER_IP_ADDRESS_OFFSET
@@ -928,8 +948,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayString sname;
         /**
-         * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully qualified
-         * directory-path name in DHCPOFFER.
+         * Boot file name, null terminated string; "generic" name or null in
+         * DHCPDISCOVER, fully qualified directory-path name in DHCPOFFER.
          * 
          * @see #BOOT_FILE_NAME_HEADER_SIZE
          * @see #BOOT_FILE_NAME_OFFSET
@@ -937,7 +957,8 @@ public class DhcpPacket extends AbstractPacket {
         private final ByteArrayString file;
 
         /**
-         * Optional parameters field. See the options documents for a list of defined options.
+         * Optional parameters field. See the options documents for a list of
+         * defined options.
          * 
          * @see #OPTIONS_OFFSET
          */
@@ -982,7 +1003,8 @@ public class DhcpPacket extends AbstractPacket {
                             , this.chaddr.getRawData() //
                             , this.sname.getRawData() //
                             , this.file.getRawData() //
-                            // [PATCH] payload가 null일 경우 NPE 방지를 위해 빈 배열(Zero-Length Array)로 대체
+                            // [PATCH] payload가 null일 경우 NPE 방지를 위해 빈
+                            // 배열(Zero-Length Array)로 대체
                             , payload != null ? payload : new byte[0] //
                     ) //
             );
@@ -1000,26 +1022,40 @@ public class DhcpPacket extends AbstractPacket {
         private DhcpHeader(byte[] rawData, int offset, int length) throws IllegalRawDataException {
             if (length < OPTIONS_OFFSET) {
                 StringBuilder sb = new StringBuilder(80);
-                sb.append("The data is too short to build a DHCP header(").append(OPTIONS_OFFSET).append(" bytes). data: ").append(ByteArrays.toHexString(rawData, " "))
-                        .append(", offset: ").append(offset).append(", length: ").append(length);
+                sb.append("The data is too short to build a DHCP header(").append(OPTIONS_OFFSET)
+                        .append(" bytes). data: ").append(ByteArrays.toHexString(rawData, " ")).append(", offset: ")
+                        .append(offset).append(", length: ").append(length);
                 throw new IllegalRawDataException(sb.toString());
             }
 
             this.rawData = Arrays.copyOfRange(rawData, offset, offset + length);
 
-            this.op = DhcpOpCode.getInstance(ByteArrays.getByte(Arrays.copyOfRange(this.rawData, OP_CODE_OFFSET, HW_TYPE_OFFSET), 0));
-            this.htype = ArpHardwareType.getInstance((short) ByteArrays.getByte(Arrays.copyOfRange(this.rawData, HW_TYPE_OFFSET, HW_ADDR_LENGTH_OFFSET), 0));
-            this.hlen = DhcpHardwareLength.getInstance(ByteArrays.getByte(Arrays.copyOfRange(this.rawData, HW_ADDR_LENGTH_OFFSET, HOPS_OFFSET), 0));
+            this.op = DhcpOpCode.getInstance(
+                    ByteArrays.getByte(Arrays.copyOfRange(this.rawData, OP_CODE_OFFSET, HW_TYPE_OFFSET), 0));
+            this.htype = ArpHardwareType.getInstance((short) ByteArrays
+                    .getByte(Arrays.copyOfRange(this.rawData, HW_TYPE_OFFSET, HW_ADDR_LENGTH_OFFSET), 0));
+            this.hlen = DhcpHardwareLength.getInstance(
+                    ByteArrays.getByte(Arrays.copyOfRange(this.rawData, HW_ADDR_LENGTH_OFFSET, HOPS_OFFSET), 0));
             this.hops = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, HOPS_OFFSET, TRANSACTION_ID_OFFSET));
             this.xid = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, TRANSACTION_ID_OFFSET, SECONDS_OFFSET));
             this.secs = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, SECONDS_OFFSET, FLAGS_OFFSET));
             this.flags = new ByteArrayInteger(Arrays.copyOfRange(this.rawData, FLAGS_OFFSET, CLIENT_IP_ADDRESS_OFFSET));
-            this.ciaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, CLIENT_IP_ADDRESS_OFFSET, YOUR_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
-            this.yiaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, YOUR_IP_ADDRESS_OFFSET, SERVER_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
-            this.siaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, SERVER_IP_ADDRESS_OFFSET, GATEWAY_IP_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
-            this.giaddr = new ByteArrayString(Arrays.copyOfRange(this.rawData, GATEWAY_IP_ADDRESS_OFFSET, CLIENT_HW_ADDRESS_OFFSET), ByteUtils::toIPv4Expr);
-            this.chaddr = new ByteArrayMAC(Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
-            this.sname = new ByteArrayString(Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
+            this.ciaddr = new ByteArrayString(
+                    Arrays.copyOfRange(this.rawData, CLIENT_IP_ADDRESS_OFFSET, YOUR_IP_ADDRESS_OFFSET),
+                    ByteUtils::toIPv4Expr);
+            this.yiaddr = new ByteArrayString(
+                    Arrays.copyOfRange(this.rawData, YOUR_IP_ADDRESS_OFFSET, SERVER_IP_ADDRESS_OFFSET),
+                    ByteUtils::toIPv4Expr);
+            this.siaddr = new ByteArrayString(
+                    Arrays.copyOfRange(this.rawData, SERVER_IP_ADDRESS_OFFSET, GATEWAY_IP_ADDRESS_OFFSET),
+                    ByteUtils::toIPv4Expr);
+            this.giaddr = new ByteArrayString(
+                    Arrays.copyOfRange(this.rawData, GATEWAY_IP_ADDRESS_OFFSET, CLIENT_HW_ADDRESS_OFFSET),
+                    ByteUtils::toIPv4Expr);
+            this.chaddr = new ByteArrayMAC(
+                    Arrays.copyOfRange(this.rawData, CLIENT_HW_ADDRESS_OFFSET, SERVER_NAME_OFFSET));
+            this.sname = new ByteArrayString(
+                    Arrays.copyOfRange(this.rawData, SERVER_NAME_OFFSET, BOOT_FILE_NAME_OFFSET));
             this.file = new ByteArrayString(Arrays.copyOfRange(this.rawData, BOOT_FILE_NAME_OFFSET, OPTIONS_OFFSET));
             this.options = Arrays.copyOfRange(this.rawData, OPTIONS_OFFSET, this.rawData.length);
         }
@@ -1091,7 +1127,8 @@ public class DhcpPacket extends AbstractPacket {
          * </pre>
          *
          * @return 헤더 필드별 바이트 배열 리스트. <br>
-         *         반환되는 {@link List} 객체 자체와 그 내부의 모든 {@code byte[]} 원소는 절대 {@code null}이 아님을 보장함.
+         *         반환되는 {@link List} 객체 자체와 그 내부의 모든 {@code byte[]} 원소는 절대
+         *         {@code null}이 아님을 보장함.
          *
          * @since 2020. 12. 16.
          *

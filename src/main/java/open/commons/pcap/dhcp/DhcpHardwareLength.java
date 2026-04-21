@@ -62,7 +62,7 @@ public class DhcpHardwareLength extends NamedNumber<Byte, DhcpHardwareLength> {
      */
     protected DhcpHardwareLength(Byte value, String name) {
         AssertUtils2.notNulls(value, name);
-        
+
         super(value, name);
     }
 

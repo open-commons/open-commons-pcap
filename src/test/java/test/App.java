@@ -113,9 +113,12 @@ public class App {
                                 UdpPacket udpPkt = (UdpPacket) ipv4Packet.getPayload();
                                 UdpHeader udpHd = udpPkt.getHeader();
                                 switch (udpHd.getSrcPort().valueAsInt()) {
-                                    case 67: // UdpPort.BOOTPS, Bootstrap Protocol Server
-                                    case 68: // UdpPort.BOOTPC, Bootstrap Protocol Client
-                                        System.out.println(">>>" + ByteUtils.hexBinString(udpPkt.getPayload().getRawData()) + "<< ");
+                                    case 67: // UdpPort.BOOTPS, Bootstrap
+                                             // Protocol Server
+                                    case 68: // UdpPort.BOOTPC, Bootstrap
+                                             // Protocol Client
+                                        System.out.println(">>>"
+                                                + ByteUtils.hexBinString(udpPkt.getPayload().getRawData()) + "<< ");
                                         byte[] udpPayload = udpPkt.getPayload().getRawData();
                                         DhcpPacket dhcpPkt;
                                         try {
@@ -137,7 +140,8 @@ public class App {
                                 TcpPacket tcpPkt = (TcpPacket) ipv4Packet.getPayload();
                                 TcpHeader tcpHd = tcpPkt.getHeader();
 
-                                System.out.println(" * * * * * * * * TCP Packet * * * * * * * * : " + tcpHd.getSrcPort());
+                                System.out
+                                        .println(" * * * * * * * * TCP Packet * * * * * * * * : " + tcpHd.getSrcPort());
                                 switch (tcpHd.getSrcPort().value()) {
                                     // HTTPS: 443
                                     case 443:
