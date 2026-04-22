@@ -182,8 +182,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private DhcpOpCode op;
         /**
-         * Hardware address type, see ARP section in "Assigned Numbers" RFC;
-         * e.g., '1' = 10mb ethernet.
+         * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb
+         * ethernet.
          */
         private ArpHardwareType htype;
         /**
@@ -191,19 +191,17 @@ public class DhcpPacket extends AbstractPacket {
          */
         private DhcpHardwareLength hlen;
         /**
-         * Client sets to zero, optionally used by relay agents when booting via
-         * a relay agent.
+         * Client sets to zero, optionally used by relay agents when booting via a relay agent.
          */
         private ByteArrayInteger hops;
         /**
-         * Transaction ID, a random number chosen by the client, used by the
-         * client and server to associate messages and responses between a
-         * client and a server.
+         * Transaction ID, a random number chosen by the client, used by the client and server to
+         * associate messages and responses between a client and a server.
          */
         private ByteArrayInteger xid;
         /**
-         * Filled in by client, seconds elapsed since client began address
-         * acquisition or renewal process.
+         * Filled in by client, seconds elapsed since client began address acquisition or renewal
+         * process.
          */
         private ByteArrayInteger secs;
 
@@ -224,8 +222,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayInteger flags;
         /**
-         * Client IP address; only filled in if client is in BOUND, RENEW or
-         * REBINDING state and can respond to ARP requests.
+         * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can
+         * respond to ARP requests.
          */
         private ByteArrayString ciaddr;
         /**
@@ -233,8 +231,7 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayString yiaddr;
         /**
-         * IP address of next server to use in bootstrap; returned in DHCPOFFER,
-         * DHCPACK by server.
+         * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
          */
         private ByteArrayString siaddr;
         /**
@@ -250,14 +247,13 @@ public class DhcpPacket extends AbstractPacket {
          */
         private ByteArrayString sname;
         /**
-         * Boot file name, null terminated string; "generic" name or null in
-         * DHCPDISCOVER, fully qualified directory-path name in DHCPOFFER.
+         * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully
+         * qualified directory-path name in DHCPOFFER.
          */
         private ByteArrayString file;
 
         /**
-         * Optional parameters field. See the options documents for a list of
-         * defined options.<br>
+         * Optional parameters field. See the options documents for a list of defined options.<br>
          * payloadRaw bytes array
          */
         private byte @Nullable [] options;
@@ -681,8 +677,7 @@ public class DhcpPacket extends AbstractPacket {
     /**
      * References:
      * <ul>
-     * <li><a href=
-     * "https://tools.ietf.org/html/rfc2131">https://tools.ietf.org/html/rfc2131</a>
+     * <li><a href= "https://tools.ietf.org/html/rfc2131">https://tools.ietf.org/html/rfc2131</a>
      * <li><a href=
      * "http://www.tcpipguide.com/free/t_DHCPMessageFormat.htm">http://www.tcpipguide.com/free/t_DHCPMessageFormat.htm</a>
      * </ul>
@@ -791,8 +786,7 @@ public class DhcpPacket extends AbstractPacket {
         /** Header Length: Gateway IP Address (giaddr) / 4 bytes (32 bits) */
         public static final int GATEWAY_IP_ADDRESS_HEADER_SIZE = 0x04;
         /**
-         * Header Length: Client Hardware Address (chaddr) / 16 bytes (128
-         * bites)
+         * Header Length: Client Hardware Address (chaddr) / 16 bytes (128 bites)
          */
         public static final int CLIENT_HW_ADDRESS_HEADER_SIZE = 0x10;
         /** Header Length: Server Name (sname) (sname) / 64 bytes (512 bits) */
@@ -844,8 +838,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final DhcpOpCode op;
         /**
-         * Hardware address type, see ARP section in "Assigned Numbers" RFC;
-         * e.g., '1' = 10mb ethernet.
+         * Hardware address type, see ARP section in "Assigned Numbers" RFC; e.g., '1' = 10mb
+         * ethernet.
          * 
          * @see #HW_TYPE_HEADER_SIZE
          * @see #HW_TYPE_OFFSET
@@ -859,25 +853,23 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final DhcpHardwareLength hlen;
         /**
-         * Client sets to zero, optionally used by relay agents when booting via
-         * a relay agent.
+         * Client sets to zero, optionally used by relay agents when booting via a relay agent.
          * 
          * @see #HOPS_HEADER_SIZE
          * @see #HOPS_OFFSET
          */
         private final ByteArrayInteger hops;
         /**
-         * Transaction ID, a random number chosen by the client, used by the
-         * client and server to associate messages and responses between a
-         * client and a server.
+         * Transaction ID, a random number chosen by the client, used by the client and server to
+         * associate messages and responses between a client and a server.
          * 
          * @see #TRANSACTION_ID_HEADER_SIZE
          * @see #TRANSACTION_ID_OFFSET
          */
         private final ByteArrayInteger xid;
         /**
-         * Filled in by client, seconds elapsed since client began address
-         * acquisition or renewal process.
+         * Filled in by client, seconds elapsed since client began address acquisition or renewal
+         * process.
          * 
          * @see #SECONDS_HEADER_SIZE
          * @see #SECONDS_OFFSET
@@ -904,8 +896,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayInteger flags;
         /**
-         * Client IP address; only filled in if client is in BOUND, RENEW or
-         * REBINDING state and can respond to ARP requests.
+         * Client IP address; only filled in if client is in BOUND, RENEW or REBINDING state and can
+         * respond to ARP requests.
          * 
          * @see #CLIENT_IP_ADDRESS_HEADER_SIZE
          * @see #CLIENT_IP_ADDRESS_OFFSET
@@ -919,8 +911,7 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayString yiaddr;
         /**
-         * IP address of next server to use in bootstrap; returned in DHCPOFFER,
-         * DHCPACK by server.
+         * IP address of next server to use in bootstrap; returned in DHCPOFFER, DHCPACK by server.
          * 
          * @see #SERVER_IP_ADDRESS_HEADER_SIZE
          * @see #SERVER_IP_ADDRESS_OFFSET
@@ -948,8 +939,8 @@ public class DhcpPacket extends AbstractPacket {
          */
         private final ByteArrayString sname;
         /**
-         * Boot file name, null terminated string; "generic" name or null in
-         * DHCPDISCOVER, fully qualified directory-path name in DHCPOFFER.
+         * Boot file name, null terminated string; "generic" name or null in DHCPDISCOVER, fully
+         * qualified directory-path name in DHCPOFFER.
          * 
          * @see #BOOT_FILE_NAME_HEADER_SIZE
          * @see #BOOT_FILE_NAME_OFFSET
@@ -957,8 +948,7 @@ public class DhcpPacket extends AbstractPacket {
         private final ByteArrayString file;
 
         /**
-         * Optional parameters field. See the options documents for a list of
-         * defined options.
+         * Optional parameters field. See the options documents for a list of defined options.
          * 
          * @see #OPTIONS_OFFSET
          */
@@ -1127,8 +1117,7 @@ public class DhcpPacket extends AbstractPacket {
          * </pre>
          *
          * @return 헤더 필드별 바이트 배열 리스트. <br>
-         *         반환되는 {@link List} 객체 자체와 그 내부의 모든 {@code byte[]} 원소는 절대
-         *         {@code null}이 아님을 보장함.
+         *         반환되는 {@link List} 객체 자체와 그 내부의 모든 {@code byte[]} 원소는 절대 {@code null}이 아님을 보장함.
          *
          * @since 2020. 12. 16.
          *
